@@ -199,6 +199,8 @@ augroup END
 
 
 "  Set user preferences. ###################################
+noremap q <nop>
+noremap Q <nop>
 set encoding=utf-8
 set swapfile
 set dir=~/tmp
