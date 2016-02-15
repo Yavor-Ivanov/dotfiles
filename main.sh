@@ -31,4 +31,3 @@ include "defaults.sh"
 include "aliases/*"
 
 eval $default_session
-l2
