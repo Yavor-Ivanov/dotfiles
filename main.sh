@@ -39,7 +39,10 @@ function include()
 
 function invoke()
 {
-	. ./"$1"
+	if [[ -f $1]]
+	then
+		. ./"$1"
+	fi
 }
 
 recursive include "defaults.sh"
