@@ -42,6 +42,6 @@ function invoke()
 	. ./"$1"
 }
 
-include "defaults.sh"
+recursive include "defaults.sh"
 recursive include "aliases/*"
 invoke "local/main.sh"
