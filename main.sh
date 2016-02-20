@@ -1,16 +1,18 @@
 #!/bin/bash
 
-SOURCE="${BASH_SOURCE[0]}"
-# Resolve $SOURCE until the file is no longer a symlink
-while [ -h "$SOURCE" ];
-do
-	DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-	SOURCE="$(readlink "$SOURCE")"
+# SOURCE="${BASH_SOURCE[0]}"
+# # Resolve $SOURCE until the file is no longer a symlink
+# while [ -h "$SOURCE" ];
+# do
+# 	DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+# 	SOURCE="$(readlink "$SOURCE")"
 
-	# if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
-	[[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
-done
-DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+# 	# if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+# 	[[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+# done
+# DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+#!/bin/bash
+DIR=$(dirname $BASH_SOURCE[0])
 shopt -s expand_aliases
 
 function recursive()
@@ -27,7 +29,7 @@ function recursive()
 
 	while read f
 	do
-		$($cmd "$f")
+		$cmd "$f"
 	done <<< "$(echo $incl_path | tr " " "\n")"
 	return 0
 }
