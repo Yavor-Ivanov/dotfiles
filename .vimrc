@@ -38,6 +38,18 @@ NeoBundle 'rking/ag.vim'
 NeoBundle 'kovisoft/slimv'						" SLiME like environment.
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'mattn/vdbi-vim'
+NeoBundle 'vim-scripts/quickrun.vim'
+NeoBundle 'osyo-manga/unite-quickfix'
+
+NeoBundle 'Shougo/vimproc.vim', {
+\ 'build' : {
+\     'windows' : 'tools\\update-dll-mingw',
+\     'cygwin' : 'make -f make_cygwin.mak',
+\     'mac' : 'make',
+\     'linux' : 'make',
+\     'unix' : 'gmake',
+\    },
+\ }
 
 
 " Plugins which are lazy loaded.
@@ -153,13 +165,6 @@ let g:bufferline_echo = 0
 let g:bufferline_inactive_highlight = 'StatusLineNC'
 let g:bufferline_active_highlight = 'StatusLine'
 let g:bufferline_solo_highlight = 1
-" autocmd VimEnter *
-"   \ let &statusline='%{bufferline#refresh_status()}' .bufferline#get_status_string()
-
-" Shorten airline status symbols.
-" let g:airline_section_c ='%{bufferline#refresh_status()}' .bufferline#get_status_string()
-" let g:airline_section_c = '%f'
-" let g:airline_section_c = airline#section#create(['bufferline'])
 
 let g:airline_section_x = ''
 let g:airline_section_y = ''
@@ -179,6 +184,20 @@ let g:airline_mode_map = {
 
 let g:slimv_swank_cmd = '! screen sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp &'
 let g:slimv_repl_split = 0
+
+let g:quickrun_config = {}
+let g:quickrun_config.handmade = {
+\ 'command' : simplify(getcwd() . '/../build'),
+\ 'outputter' : 'quickfix',
+\ }
+
+command! ClearQuickfixList cexpr []
+function! BuildHandmade()
+	:ClearQuickfixList
+	:QuickRun handmade
+	:copen
+endfunction
+command! BuildHandmade call BuildHandmade()
 
 " Email options ##########################
 function! EmailOptions()
@@ -241,6 +260,7 @@ let mapleader = "\<Space>"
 nmap <leader>l V
 map <leader>a ^
 map <leader>z g_
+nmap <leader>b :BuildHandmade<CR>
 set pastetoggle=<F12>
 set nonumber
 syntax sync minlines=256
@@ -265,7 +285,7 @@ vmap <C-c> "+y
 map <C-v> "+p
 vmap <C-x> "+d
 nmap <leader>p <C-p>
-nnoremap <C-l> <C-v>
+" nnoremap <C-o> <c-v>
 
 
 " Configure window and buffer navigation shortcuts
