@@ -45,9 +45,8 @@ NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
 \     'windows' : 'tools\\update-dll-mingw',
 \     'cygwin' : 'make -f make_cygwin.mak',
-\     'mac' : 'make',
-\     'linux' : 'make',
-\     'unix' : 'gmake',
+\     'mac' : 'make -f make_mac.mak',
+\     'unix' : 'make -f make_unix.mak',
 \    },
 \ }
 
@@ -65,7 +64,7 @@ TPlugin vim-git
 TPlugin vim-python-pep8-indent
 TPlugin vim-bookmarks
 TPlugin ctrlp-py-matcher
-TPlugin neocomplete.vim
+" TPlugin neocomplete.vim
 TPlugin vim-scripts/Comceal.git
 TPlugin rainbow
 TPlugin vim-bbye
@@ -101,7 +100,11 @@ TPlugin vdebug
 " NeoBundle 'bronson/vim-trailing-whitespace'	" Highlights trailing whitespaces in files. Deletes trailing whitespaces on save.
 " NeoBundle 'joonty/vdebug.git'					" X-Debug cluent.
 " NeoBundle 'moll/vim-bbye'					    " Clear buffer; keep window.
+NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'm2mdas/phpcomplete-extended'
+NeoBundle 'm2mdas/phpcomplete-extended-laravel'
 NeoBundle 'jistr/vim-nerdtree-tabs'
+NeoBundle 'ternjs/tern_for_vim'
 call neobundle#end()
 
 " Required:
@@ -153,12 +156,12 @@ let g:pymode_lint_options_pep8 = {
 	\ 'max_line_length': g:pymode_options_max_line_length,
 	\ 'ignore': 'E251'}
 let g:pymode_indent = 1
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1 " Use smartcase.
-let g:neocomplete#auto_completion_start_length = 3
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#enable_fuzzy_completion = 1
-let g:neocomplete#data_directory = '~/tmp/.neocomplete'
+" let g:neocomplete#enable_at_startup = 1
+" let g:neocomplete#enable_smart_case = 1 " Use smartcase.
+" let g:neocomplete#auto_completion_start_length = 3
+" let g:neocomplete#sources#syntax#min_keyword_length = 3
+" let g:neocomplete#enable_fuzzy_completion = 1
+" let g:neocomplete#data_directory = '~/tmp/.neocomplete'
 let g:bufferline_rotate = 1
 let g:bufferline_show_bufnr = 0
 let g:bufferline_echo = 0
@@ -309,8 +312,8 @@ map <leader>td <Plug>TaskList
 map <leader>f :NERDTreeTabsOpen<CR>
 nmap <leader>s <ESC>:Ag<SPACE>
 map <leader>u :GundoToggle<CR>
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>" " Neocomplete tab look forward.
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "<TAB>" " Neocomplete tab look backwards.
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>" " Neocomplete tab look forward.
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "<TAB>" " Neocomplete tab look backwards.
 map f <Plug>(easymotion-s)
 map F <Plug>(easymotion-bd-w)
 
@@ -319,11 +322,15 @@ map F <Plug>(easymotion-bd-w)
 :command! -range=% -nargs=0 Space2Tab execute '<line1>,<line2>s#^\( \{'.&ts.'\}\)\+#\=repeat("\t", len(submatch(0))/' . &ts . ')'
 
 " Enable omni completion.
+let g:ycm_enable_diagnostic_signs = 0
+let g:ycm_enable_diagnostic_highlighting = 0
+let g:phpcomplete_index_composer_command = "composer"
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
 :autocmd BufReadPost quickfix nnoremap <buffer> o <CR>
 
 

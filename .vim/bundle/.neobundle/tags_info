@@ -1,9 +1,13 @@
+YouCompleteMe
 ag.vim
 ctrlp.vim
 emmet-vim
 neobundle.vim
+phpcomplete-extended
+phpcomplete-extended-laravel
 quickrun.vim
 slimv
+tern_for_vim
 unite-quickfix
 unite.vim
 vdbi-vim
