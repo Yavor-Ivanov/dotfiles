@@ -27,6 +27,7 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'wakatime/vim-wakatime'				" Automatic time tracking for vim with version control integration.
 NeoBundle 'kien/ctrlp.vim'						" Fuzzy file search.
 NeoBundle 'sickill/vim-monokai'					" Monokai theme.
+NeoBundle 'Yavor-Ivanov/airline-monokai-subtle.vim'		" Monokai theme for vim-airline.
 NeoBundle 'tpope/vim-fugitive'					" Git wrapper.
 NeoBundle 'craigemery/vim-autotag'
 NeoBundle 'mattn/emmet-vim'
@@ -146,7 +147,7 @@ let g:ctrp_custom_ignore = {
 let g:php_syntax_extensions_enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'jellybeans'
+let g:airline_theme = 'monokai_subtle'
 set completeopt-=preview
 set ttimeoutlen=50
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif

@@ -1,5 +1,6 @@
 YouCompleteMe
 ag.vim
+airline-monokai-subtle.vim
 ctrlp.vim
 emmet-vim
 neobundle.vim
