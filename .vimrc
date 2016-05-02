@@ -221,6 +221,9 @@ augroup END
 
 
 "  Set user preferences. ###################################
+set listchars=tab:>-,extends:>,precedes:<
+set list
+set modelines=5
 noremap q <nop>
 noremap Q <nop>
 set encoding=utf-8
@@ -236,7 +239,6 @@ set smartcase
 set incsearch
 set ttyfast
 set lazyredraw
-set modelines=0
 set tags=~/tags
 set hidden	 	" Allow new buffers to be opened without being nagged to save the current buffer.
 set wildmenu 	" Command completion.
