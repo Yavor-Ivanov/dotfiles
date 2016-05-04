@@ -1,1 +1,3 @@
 local/
+# Don't version plugins; NeoBundle takes care of those.
+.vim/bundle/**

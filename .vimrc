@@ -52,57 +52,60 @@ NeoBundle 'Shougo/vimproc.vim', {
 
 
 " Plugins which are lazy loaded.
-TPlugin nerdtree
-TPlugin delimitMate
-TPlugin vim-commentary
-TPlugin vim-easymotion
-TPlugin vim-multiple-cursors
-TPlugin vim-surround
-TPlugin vim-airline
-TPlugin PIV
-TPlugin vim-git
-TPlugin vim-python-pep8-indent
-TPlugin vim-bookmarks
-TPlugin ctrlp-py-matcher
+"TPlugin nerdtree
+"TPlugin delimitMate
+"TPlugin vim-commentary
+"TPlugin vim-easymotion
+"TPlugin vim-multiple-cursors
+"TPlugin vim-surround
+"TPlugin vim-airline
+"TPlugin PIV
+"TPlugin vim-git
+"TPlugin vim-python-pep8-indent
+"TPlugin vim-bookmarks
+"TPlugin ctrlp-py-matcher
 " TPlugin neocomplete.vim
-TPlugin vim-scripts/Comceal.git
-TPlugin rainbow
-TPlugin vim-bbye
-TPlugin vdebug
+"TPlugin vim-scripts/Comceal.git
+"TPlugin rainbow
+"TPlugin vim-bbye
+"TPlugin vdebug
 
 "
 " Uncomment these lines to install the plugins on first run.
 " Note: Comment lines below once the initial install is done to avoid loading these plugins twice.
 "
 "
-" NeoBundle 'tomtom/tplugin_vim'
-" NeoBundle 'hynek/vim-python-pep8-indent'		" Python auto indentation rules.
-" NeoBundle 'sheerun/vim-polyglot'				" Niceties for all languages.
-" NeoBundle 'bling/vim-airline'					" Status bar extension.
-" NeoBundle 'terryma/vim-multiple-cursors'		" Sublime-like multiple cursor edit.
-" NeoBundle 'scrooloose/nerdtree'				" File system browser.
-" NeoBundle 'sjl/gundo.vim'						" Undo buffer window with diffs.
-" NeoBundle 'Raimondi/delimitMate'				" Auto close pairs of brackets, quotes, braces.
+NeoBundle 'tomtom/tplugin_vim'
+NeoBundle 'hynek/vim-python-pep8-indent'		" Python auto indentation rules.
+NeoBundle 'sheerun/vim-polyglot'				" Niceties for all languages.
+NeoBundle 'bling/vim-airline'					" Status bar extension.
+NeoBundle 'vim-airline/vim-airline-themes'					" Status bar extension.
+NeoBundle 'rcabralc/monokai-airline.vim'
+NeoBundle 'terryma/vim-multiple-cursors'		" Sublime-like multiple cursor edit.
+NeoBundle 'scrooloose/nerdtree'				" File system browser.
+NeoBundle 'sjl/gundo.vim'						" Undo buffer window with diffs.
+NeoBundle 'Raimondi/delimitMate'				" Auto close pairs of brackets, quotes, braces.
 
-" NeoBundle 'vim-scripts/TaskList.vim'			" Generates a task list from all TODO and FIXME comments.
-" NeoBundle 'junegunn/vim-easy-align'			" Source code alignment.
-" NeoBundle 'Lokaltog/vim-easymotion'			" Superior positioning macros.
-" NeoBundle 'tpope/vim-commentary'				" One comment keymapping to rule them all.
-" NeoBundle 'tpope/vim-surround'
-" NeoBundle 'klen/python-mode'					" PEP8, pyflakes, syntax higlighting, mccabe, etc.
-" NeoBundle 'tpope/vim-git'						" Vim git integration.
-" NeoBundle 'MattesGroeger/vim-bookmarks'
-" NeoBundle 'FelikZ/ctrlp-py-matcher'
-" NeoBundle 'Shougo/neocomplete.vim'
-" NeoBundle 'vim-scripts/Comceal.git'
-" NeoBundle 'spf13/PIV'
-" NeoBundle 'luochen1990/rainbow'				" Rainbow highlighting for nested parenthesis
-" NeoBundle 'bronson/vim-trailing-whitespace'	" Highlights trailing whitespaces in files. Deletes trailing whitespaces on save.
-" NeoBundle 'joonty/vdebug.git'					" X-Debug cluent.
-" NeoBundle 'moll/vim-bbye'					    " Clear buffer; keep window.
+NeoBundle 'vim-scripts/TaskList.vim'			" Generates a task list from all TODO and FIXME comments.
+NeoBundle 'junegunn/vim-easy-align'			" Source code alignment.
+NeoBundle 'Lokaltog/vim-easymotion'			" Superior positioning macros.
+NeoBundle 'tpope/vim-commentary'				" One comment keymapping to rule them all.
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'klen/python-mode'					" PEP8, pyflakes, syntax higlighting, mccabe, etc.
+NeoBundle 'tpope/vim-git'						" Vim git integration.
+NeoBundle 'MattesGroeger/vim-bookmarks'
+NeoBundle 'FelikZ/ctrlp-py-matcher'
+NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'vim-scripts/Comceal.git'
+NeoBundle 'spf13/PIV'
+NeoBundle 'luochen1990/rainbow'				" Rainbow highlighting for nested parenthesis
+NeoBundle 'bronson/vim-trailing-whitespace'	" Highlights trailing whitespaces in files. Deletes trailing whitespaces on save.
+NeoBundle 'joonty/vdebug.git'					" X-Debug cluent.
+NeoBundle 'moll/vim-bbye'					    " Clear buffer; keep window.
+"
 NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'm2mdas/phpcomplete-extended'
-NeoBundle 'm2mdas/phpcomplete-extended-laravel'
+" NeoBundle 'm2mdas/phpcomplete-extended-laravel'
 NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'ternjs/tern_for_vim'
 call neobundle#end()
@@ -146,7 +149,7 @@ let g:ctrp_custom_ignore = {
 let g:php_syntax_extensions_enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'jellybeans'
+let g:airline_theme = 'monokai'
 set completeopt-=preview
 set ttimeoutlen=50
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
