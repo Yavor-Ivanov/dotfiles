@@ -9,6 +9,7 @@ alias cd..="up"
 alias py="python"
 alias py3="python3"
 alias p3="py3"
+alias f="ranger"
 
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
