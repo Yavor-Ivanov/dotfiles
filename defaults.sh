@@ -20,3 +20,12 @@ xterm*|rxvt*|*color)
 *)
     ;;
 esac
+
+case "$OSTYPE" in
+	darwin*)
+		# NOTE: Run `brew install coreutils` on OSX to use the
+		# standard Linux utilities.
+		PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+		MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+	;;
+esac
