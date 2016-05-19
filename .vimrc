@@ -41,6 +41,7 @@ NeoBundle 'mattn/webapi-vim'
 NeoBundle 'mattn/vdbi-vim'
 NeoBundle 'vim-scripts/quickrun.vim'
 NeoBundle 'osyo-manga/unite-quickfix'
+NeoBundle 'sotte/presenting.vim'
 
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
@@ -65,11 +66,11 @@ TPlugin vim-git
 TPlugin vim-python-pep8-indent
 TPlugin vim-bookmarks
 TPlugin ctrlp-py-matcher
-" TPlugin neocomplete.vim
 TPlugin vim-scripts/Comceal.git
 TPlugin rainbow
 TPlugin vim-bbye
 TPlugin vdebug
+TPlugin gundo.vim
 
 "
 " Uncomment these lines to install the plugins on first run.
@@ -197,6 +198,7 @@ let g:quickrun_config.handmade = {
 
 command! ClearQuickfixList cexpr []
 function! BuildHandmade()
+	:setlocal errorformat=%f:%l:%c:\ %t%s:\ %m
 	:ClearQuickfixList
 	:QuickRun handmade
 	:copen

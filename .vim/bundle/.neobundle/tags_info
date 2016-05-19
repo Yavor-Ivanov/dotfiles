@@ -6,6 +6,7 @@ emmet-vim
 neobundle.vim
 phpcomplete-extended
 phpcomplete-extended-laravel
+presenting.vim
 quickrun.vim
 slimv
 tern_for_vim
