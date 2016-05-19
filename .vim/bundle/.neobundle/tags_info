@@ -4,12 +4,9 @@ airline-monokai-subtle.vim
 ctrlp.vim
 emmet-vim
 neobundle.vim
-phpcomplete-extended
-phpcomplete-extended-laravel
 presenting.vim
 quickrun.vim
 slimv
-tern_for_vim
 unite-quickfix
 unite.vim
 vdbi-vim

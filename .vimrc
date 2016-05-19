@@ -23,6 +23,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 
 " Bundles which need to always run on startup.
+NeoBundle 'jistr/vim-nerdtree-tabs'				" I'm not sure why this loads faster when loaded first.
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'wakatime/vim-wakatime'				" Automatic time tracking for vim with version control integration.
 NeoBundle 'kien/ctrlp.vim'						" Fuzzy file search.
@@ -42,6 +43,7 @@ NeoBundle 'mattn/vdbi-vim'
 NeoBundle 'vim-scripts/quickrun.vim'
 NeoBundle 'osyo-manga/unite-quickfix'
 NeoBundle 'sotte/presenting.vim'
+NeoBundle 'Valloric/YouCompleteMe'
 
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
@@ -71,6 +73,7 @@ TPlugin rainbow
 TPlugin vim-bbye
 TPlugin vdebug
 TPlugin gundo.vim
+TPlugin tern_for_vim
 
 "
 " Uncomment these lines to install the plugins on first run.
@@ -81,6 +84,8 @@ TPlugin gundo.vim
 " NeoBundle 'hynek/vim-python-pep8-indent'		" Python auto indentation rules.
 " NeoBundle 'sheerun/vim-polyglot'				" Niceties for all languages.
 " NeoBundle 'bling/vim-airline'					" Status bar extension.
+" NeoBundle 'vim-airline/vim-airline-themes'					" Status bar extension.
+" NeoBundle 'rcabralc/monokai-airline.vim'
 " NeoBundle 'terryma/vim-multiple-cursors'		" Sublime-like multiple cursor edit.
 " NeoBundle 'scrooloose/nerdtree'				" File system browser.
 " NeoBundle 'sjl/gundo.vim'						" Undo buffer window with diffs.
@@ -102,11 +107,8 @@ TPlugin gundo.vim
 " NeoBundle 'bronson/vim-trailing-whitespace'	" Highlights trailing whitespaces in files. Deletes trailing whitespaces on save.
 " NeoBundle 'joonty/vdebug.git'					" X-Debug cluent.
 " NeoBundle 'moll/vim-bbye'					    " Clear buffer; keep window.
-NeoBundle 'Valloric/YouCompleteMe'
-NeoBundle 'm2mdas/phpcomplete-extended'
-NeoBundle 'm2mdas/phpcomplete-extended-laravel'
-NeoBundle 'jistr/vim-nerdtree-tabs'
-NeoBundle 'ternjs/tern_for_vim'
+" "
+" NeoBundle 'ternjs/tern_for_vim'
 call neobundle#end()
 
 " Required:
