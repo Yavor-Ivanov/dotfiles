@@ -43,6 +43,7 @@ NeoBundle 'mattn/vdbi-vim'
 NeoBundle 'vim-scripts/quickrun.vim'
 NeoBundle 'osyo-manga/unite-quickfix'
 NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'rdnetto/YCM-Generator'
 
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
@@ -266,6 +267,7 @@ set cindent
 let mapleader = "\<Space>"
 nmap <leader>l V
 map <leader>a ^
+map <leader>c :set list!<CR>
 map <leader>z g_
 nmap <leader>b :BuildHandmade<CR>
 set pastetoggle=<F12>
