@@ -214,12 +214,6 @@ function! Build()
 endfunction
 command! Build call Build()
 
-function! BuildHandmade()
-	:setlocal errorformat=%f:%l:%c:\ %t%s:\ %m
-	call Build()
-endfunction
-command! BuildHandmade call BuildHandmade()
-
 " Email options ##########################
 function! EmailOptions()
 	set wrap
