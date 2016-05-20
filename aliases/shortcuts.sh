@@ -9,3 +9,11 @@ alias cd..="up"
 alias py="python"
 alias py3="python3"
 alias p3="py3"
+alias f="ranger"
+
+alias ls='ls --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
