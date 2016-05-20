@@ -197,13 +197,25 @@ let g:quickrun_config.handmade = {
 \ 'command' : simplify(getcwd() . '/../build'),
 \ 'outputter' : 'quickfix',
 \ }
+let g:quickrun_config.node = {
+\ 'command' : 'node',
+\ 'outputter' : 'quickfix',
+\ }
 
 command! ClearQuickfixList cexpr []
+
+let g:project_name = ''
+
+function! Build()
+	:ClearQuickfixList
+	exec ':QuickRun ' . g:project_name
+	:copen
+endfunction
+command! Build call Build()
+
 function! BuildHandmade()
 	:setlocal errorformat=%f:%l:%c:\ %t%s:\ %m
-	:ClearQuickfixList
-	:QuickRun handmade
-	:copen
+	call Build()
 endfunction
 command! BuildHandmade call BuildHandmade()
 
@@ -226,6 +238,8 @@ augroup END
 
 
 "  Set user preferences. ###################################
+set exrc	" Allow per-project configs,
+set secure	" but disable unsafe shell writes and autocmd-s.
 set listchars=tab:>-,extends:>,precedes:<
 set list
 set modelines=5
@@ -270,7 +284,7 @@ let mapleader = "\<Space>"
 nmap <leader>l V
 map <leader>a ^
 map <leader>z g_
-nmap <leader>b :BuildHandmade<CR>
+nmap <leader>b :Build<CR>
 set pastetoggle=<F12>
 set nonumber
 syntax sync minlines=256
