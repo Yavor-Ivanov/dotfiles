@@ -45,6 +45,7 @@ NeoBundle 'osyo-manga/unite-quickfix'
 NeoBundle 'sotte/presenting.vim'
 NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'rdnetto/YCM-Generator'
+NeoBundle 'dhruvasagar/vim-table-mode'
 
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
