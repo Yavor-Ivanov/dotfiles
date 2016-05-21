@@ -34,4 +34,5 @@ alias py='python'
 alias py3='python3'
 alias p3='py3'
 
+eval $(thefuck --alias)
 alias pls='fuck'
