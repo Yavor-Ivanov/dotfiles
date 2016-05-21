@@ -271,7 +271,6 @@ filetype plugin on
 filetype plugin indent on
 set foldmethod=indent
 set foldlevel=99
-set cc=0
 set tabstop=4
 set shiftwidth=4
 set cindent
@@ -285,7 +284,8 @@ set pastetoggle=<F12>
 set nonumber
 syntax sync minlines=256
 set synmaxcol=200
-set colorcolumn=80,100
+set cc=0
+match Search '\%>80v.\+' " Underline everything after column 80
 
 
 " Saner indenting hotkeys.
