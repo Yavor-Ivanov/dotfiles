@@ -285,7 +285,7 @@ set nonumber
 syntax sync minlines=256
 set synmaxcol=200
 set cc=0
-match Search '\%>80v.\+' " Underline everything after column 80
+au! BufEnter * let w:m=matchadd('Search', '\%>81v.\+', -1) " Underline everything after column 80
 
 
 " Saner indenting hotkeys.
