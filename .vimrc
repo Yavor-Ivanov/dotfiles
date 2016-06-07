@@ -46,6 +46,7 @@ NeoBundle 'sotte/presenting.vim'
 NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'rdnetto/YCM-Generator'
 NeoBundle 'dhruvasagar/vim-table-mode'
+NeoBundle 'tpope/vim-abolish' " More powerful word substitution.
 
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
@@ -76,6 +77,8 @@ TPlugin vim-bbye
 TPlugin vdebug
 TPlugin gundo.vim
 TPlugin tern_for_vim
+TPlugin vim-operator-highlight
+let g:ophigh_color = 197
 
 "
 " Uncomment these lines to install the plugins on first run.
@@ -109,6 +112,7 @@ TPlugin tern_for_vim
 " NeoBundle 'bronson/vim-trailing-whitespace'	" Highlights trailing whitespaces in files. Deletes trailing whitespaces on save.
 " NeoBundle 'joonty/vdebug.git'					" X-Debug cluent.
 " NeoBundle 'moll/vim-bbye'					    " Clear buffer; keep window.
+" NeoBundle 'Valloric/vim-operator-highlight'
 " "
 " NeoBundle 'ternjs/tern_for_vim'
 call neobundle#end()
@@ -286,7 +290,18 @@ set nonumber
 syntax sync minlines=256
 set synmaxcol=200
 set cc=0
-au! BufEnter * let w:m=matchadd('Search', '\%>81v.\+', -1) " Underline everything after column 80
+" I treat column 80 as a strong styllistic suggestion, rather than an
+" unbreakable rule. Whenever I trigger one of these highlights, I will try to
+" break down the line of code, unless it hurts readability.
+"
+" I chose column 120 as a secondary (stronger) highlight, because 11 inch
+" screens run out of screen space somewhere around that point, depending on how
+" your terminal fonts are configured. (I get 150 characters on my current setup,
+" but it's better to err on the safe side.)
+au BufEnter * let w:m1=matchadd('Search', '\%>81v.\+', -1)
+au BufEnter * let w:m2=matchadd('SpellCap', '\%>121v.\+', -1)
+set splitright
+set splitbelow
 
 
 " Saner indenting hotkeys.
