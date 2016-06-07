@@ -79,6 +79,8 @@ TPlugin gundo.vim
 TPlugin tern_for_vim
 TPlugin vim-operator-highlight
 let g:ophigh_color = 197
+let g:ophigh_filetypes_to_ignore = {}
+let g:ophigh_filetypes_to_ignore.nerdtree = 1
 
 "
 " Uncomment these lines to install the plugins on first run.
