@@ -30,7 +30,6 @@ NeoBundle 'kien/ctrlp.vim'						" Fuzzy file search.
 NeoBundle 'sickill/vim-monokai'					" Monokai theme.
 NeoBundle 'Yavor-Ivanov/airline-monokai-subtle.vim'		" Monokai theme for vim-airline.
 NeoBundle 'tpope/vim-fugitive'					" Git wrapper.
-NeoBundle 'craigemery/vim-autotag'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'bronson/vim-trailing-whitespace'
@@ -152,9 +151,9 @@ endif
 
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ctrp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp$',
-  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
-  \ }
+			\ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp$',
+			\ 'file': '\.so$\|\.dat$|\.DS_Store$'
+			\ }
 let g:php_syntax_extensions_enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline_powerline_fonts = 1
@@ -165,8 +164,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " let g:pymode_options_colorcolumn = 120
 let g:pymode_options_max_line_length = 120
 let g:pymode_lint_options_pep8 = {
-	\ 'max_line_length': g:pymode_options_max_line_length,
-	\ 'ignore': 'E251'}
+			\ 'max_line_length': g:pymode_options_max_line_length,
+			\ 'ignore': 'E251'}
 let g:pymode_indent = 1
 " let g:neocomplete#enable_at_startup = 1
 " let g:neocomplete#enable_smart_case = 1 " Use smartcase.
@@ -184,31 +183,31 @@ let g:bufferline_solo_highlight = 1
 let g:airline_section_x = ''
 let g:airline_section_y = ''
 let g:airline_mode_map = {
-\ '__' : '-',
-\ 'n'  : 'N',
-\ 'i'  : 'I',
-\ 'R'  : 'R',
-\ 'c'  : 'C',
-\ 'v'  : 'V',
-\ 'V'  : 'V',
-\ '' : 'V',
-\ 's'  : 'S',
-\ 'S'  : 'S',
-\ '' : 'S',
-\ }
+			\ '__' : '-',
+			\ 'n'  : 'N',
+			\ 'i'  : 'I',
+			\ 'R'  : 'R',
+			\ 'c'  : 'C',
+			\ 'v'  : 'V',
+			\ 'V'  : 'V',
+			\ '' : 'V',
+			\ 's'  : 'S',
+			\ 'S'  : 'S',
+			\ '' : 'S',
+			\ }
 
 let g:slimv_swank_cmd = '! screen sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp &'
 let g:slimv_repl_split = 0
 
 let g:quickrun_config = {}
 let g:quickrun_config.handmade = {
-\ 'command' : simplify(getcwd() . '/../build'),
-\ 'outputter' : 'quickfix',
-\ }
+			\ 'command' : simplify(getcwd() . '/../build'),
+			\ 'outputter' : 'quickfix',
+			\ }
 let g:quickrun_config.node = {
-\ 'command' : 'node',
-\ 'outputter' : 'quickfix',
-\ }
+			\ 'command' : 'node',
+			\ 'outputter' : 'quickfix',
+			\ }
 
 command! ClearQuickfixList cexpr []
 
@@ -234,12 +233,13 @@ function! EmailOptions()
 endfunction
 
 augroup EmailRules()
-  autocmd!
-  autocmd FileType mail call EmailOptions()
+	autocmd!
+	autocmd FileType mail call EmailOptions()
 augroup END
 
 
 "  Set user preferences. ###################################
+set regexpengine=1
 set exrc	" Allow per-project configs,
 set secure	" but disable unsafe shell writes and autocmd-s.
 set listchars=tab:>-,extends:>,precedes:<
@@ -289,7 +289,7 @@ map <leader>z g_
 nmap <leader>b :Build<CR>
 set pastetoggle=<F12>
 set nonumber
-syntax sync minlines=256
+syntax sync minlines=120
 set synmaxcol=200
 set cc=0
 " I treat column 80 as a strong styllistic suggestion, rather than an
@@ -304,6 +304,20 @@ au BufEnter * let w:m1=matchadd('Search', '\%>81v.\+', -1)
 au BufEnter * let w:m2=matchadd('SpellCap', '\%>121v.\+', -1)
 set splitright
 set splitbelow
+
+
+" Fix annoying default behaviour.
+nnoremap gg ggzz
+nnoremap n nzz
+nnoremap N nzz
+nnoremap } }zz
+nnoremap { {zz
+nnoremap j gj
+nnoremap k gk
+set noswapfile
+set shortmess+=I
+set backspace=indent,eol,start
+set gdefault
 
 
 " Saner indenting hotkeys.
@@ -340,6 +354,10 @@ map <leader>X :bd!<CR>
 map <leader>E :e ~/Development/www/
 map <leader>e :e<SPACE>
 nmap <leader>w :%s/\s\+$//
+nmap <leader>v :vsp<SPACE>
+nmap <leader>V :vsp %
+nmap <leader>h :sp<SPACE>
+nmap <leader>H :sp %
 
 
 " Configure plugin shortcuts #################################
@@ -357,6 +375,7 @@ map F <Plug>(easymotion-bd-w)
 :command! -range=% -nargs=0 Space2Tab execute '<line1>,<line2>s#^\( \{'.&ts.'\}\)\+#\=repeat("\t", len(submatch(0))/' . &ts . ')'
 
 " Enable omni completion.
+let g:ycm_register_as_syntastic_checker = 0
 let g:ycm_enable_diagnostic_signs = 0
 let g:ycm_enable_diagnostic_highlighting = 0
 let g:phpcomplete_index_composer_command = "composer"
