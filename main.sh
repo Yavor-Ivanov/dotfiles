@@ -12,8 +12,19 @@
 # done
 # DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #!/bin/bash
+
+# Quiet, please
+pushd () {
+    command pushd "$@" > /dev/null
+}
+
+popd () {
+    command popd "$@" > /dev/null
+}
+
 DIR=$(dirname $BASH_SOURCE[0])
 shopt -s expand_aliases
+pushd $DIR
 
 function recursive()
 {
@@ -41,12 +52,16 @@ function include()
 
 function invoke()
 {
-	if [[ -f $1 ]]
+	local file=`realpath $1`
+	if [[ `readlink -e $file` ]]
 	then
-		. ./"$1"
+		. $file
+	else
+		echo "Cannot invoke $file! No such file found."
 	fi
 }
 
 recursive include "defaults.sh"
 recursive include "aliases/*"
-invoke "local/main.sh"
+invoke "local/*"
+popd
