@@ -208,6 +208,16 @@ let g:quickrun_config.node = {
 			\ 'command' : 'node',
 			\ 'outputter' : 'quickfix',
 			\ }
+let g:quickrun_config.sage = {
+			\ 'command' : "sage",
+			\ 'outputter' : 'quickfix',
+			\ }
+
+
+			" \ 'command' : "sage -t %%",
+au! BufRead,BufNewFile *.sage,*.spyx,*.pyx let g:project_name='sage'
+
+
 
 command! ClearQuickfixList cexpr []
 
@@ -217,6 +227,10 @@ function! Build()
 	:ClearQuickfixList
 	exec ':QuickRun ' . g:project_name
 	:copen
+	if line('$') == 1 && getline(1) == ''
+		:echom "Build completed with 0 errors."
+		:close
+	endif
 endfunction
 command! Build call Build()
 
@@ -386,6 +400,9 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
 :autocmd BufReadPost quickfix nnoremap <buffer> o <CR>
+augroup filetypedetect
+	au! BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
+augroup END
 
 
 function! CloseWindow()
