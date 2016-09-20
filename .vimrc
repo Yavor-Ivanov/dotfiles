@@ -224,6 +224,7 @@ command! ClearQuickfixList cexpr []
 let g:project_name = ''
 
 function! Build()
+	:silent w
 	:ClearQuickfixList
 	exec ':QuickRun ' . g:project_name
 	:copen
