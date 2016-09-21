@@ -47,6 +47,7 @@ NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'rdnetto/YCM-Generator'
 NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'tpope/vim-abolish' " More powerful word substitution.
+NeoBundle 'junegunn/vim-easy-align'
 
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
