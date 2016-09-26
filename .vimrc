@@ -68,7 +68,7 @@ TPlugin vim-airline
 TPlugin PIV
 TPlugin vim-git
 TPlugin vim-python-pep8-indent
-TPlugin vim-bookmarks
+" TPlugin vim-bookmarks
 TPlugin ctrlp-py-matcher
 TPlugin vim-scripts/Comceal.git
 TPlugin rainbow
