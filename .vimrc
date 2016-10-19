@@ -63,7 +63,7 @@ TPlugin nerdtree
 TPlugin delimitMate
 TPlugin vim-commentary
 TPlugin vim-easymotion
-TPlugin vim-multiple-cursors
+" TPlugin vim-multiple-cursors
 TPlugin vim-surround
 TPlugin vim-airline
 TPlugin PIV
@@ -71,12 +71,12 @@ TPlugin vim-git
 TPlugin vim-python-pep8-indent
 " TPlugin vim-bookmarks
 TPlugin ctrlp-py-matcher
-TPlugin vim-scripts/Comceal.git
+" TPlugin vim-scripts/Comceal.git
 TPlugin rainbow
 TPlugin vim-bbye
 TPlugin vdebug
-TPlugin gundo.vim
-TPlugin tern_for_vim
+" TPlugin gundo.vim
+" TPlugin tern_for_vim
 TPlugin vim-operator-highlight
 let g:ophigh_color = 197
 let g:ophigh_filetypes_to_ignore = {}
