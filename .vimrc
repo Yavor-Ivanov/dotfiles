@@ -25,9 +25,10 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " Bundles which need to always run on startup.
 NeoBundle 'jistr/vim-nerdtree-tabs'				" I'm not sure why this loads faster when loaded first.
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'wakatime/vim-wakatime'				" Automatic time tracking for vim with version control integration.
+" NeoBundle 'wakatime/vim-wakatime'				" Automatic time tracking for vim with version control integration.
 NeoBundle 'kien/ctrlp.vim'						" Fuzzy file search.
 NeoBundle 'sickill/vim-monokai'					" Monokai theme.
+NeoBundle 'Yavor-Ivanov/min16'					" Minimal syntax highlighting for 16 colour terminals.
 NeoBundle 'Yavor-Ivanov/airline-monokai-subtle.vim'		" Monokai theme for vim-airline.
 NeoBundle 'tpope/vim-fugitive'					" Git wrapper.
 NeoBundle 'mattn/emmet-vim'
@@ -60,7 +61,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 
 " Plugins which are lazy loaded.
 TPlugin nerdtree
-TPlugin delimitMate
+" TPlugin delimitMate
 TPlugin vim-commentary
 TPlugin vim-easymotion
 " TPlugin vim-multiple-cursors
@@ -77,10 +78,10 @@ TPlugin vim-bbye
 TPlugin vdebug
 " TPlugin gundo.vim
 " TPlugin tern_for_vim
-TPlugin vim-operator-highlight
-let g:ophigh_color = 197
-let g:ophigh_filetypes_to_ignore = {}
-let g:ophigh_filetypes_to_ignore.nerdtree = 1
+" TPlugin vim-operator-highlight
+" let g:ophigh_color = 254
+" let g:ophigh_filetypes_to_ignore = {}
+" let g:ophigh_filetypes_to_ignore.nerdtree = 1
 
 "
 " Uncomment these lines to install the plugins on first run.
@@ -128,7 +129,29 @@ NeoBundleCheck
 " Set plugin preferences. ###########################################
 "
 " Auto compile coffeescript files on write.
-let g:rainbow_active = 1
+" let g:rainbow_active = 1
+" let g:rainbow_conf = {
+" \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+" \   'ctermfgs': [250, 253, 255],
+" \   'operators': '_,_',
+" \   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+" \   'separately': {
+" \       '*': {},
+" \       'tex': {
+" \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+" \       },
+" \       'lisp': {
+" \           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+" \       },
+" \       'vim': {
+" \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+" \       },
+" \       'html': {
+" \           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+" \       },
+" \       'css': 0,
+" \   }
+" \}
 let g:extra_whitespace_ignored_filetypes = ['unite', 'vimfiler', 'mail']
 autocmd BufWritePost *.coffee :CoffeeLint! | cwindow
 "
@@ -259,7 +282,7 @@ set regexpengine=1
 set exrc	" Allow per-project configs,
 set secure	" but disable unsafe shell writes and autocmd-s.
 set listchars=tab:>-,extends:>,precedes:<
-set list
+set nolist
 set modelines=5
 noremap q <nop>
 noremap Q <nop>
@@ -284,7 +307,7 @@ set history=1000
 set undolevels=1000
 set title
 set t_Co=256
-colors monokai
+colors min16
 set nowrap
 set laststatus=2
 syntax enable
@@ -316,8 +339,8 @@ set cc=0
 " screens run out of screen space somewhere around that point, depending on how
 " your terminal fonts are configured. (I get 150 characters on my current setup,
 " but it's better to err on the safe side.)
-au BufEnter * let w:m1=matchadd('Search', '\%>81v.\+', -1)
-au BufEnter * let w:m2=matchadd('SpellCap', '\%>121v.\+', -1)
+" au BufEnter * let w:m1=matchadd('Search', '\%>81v.\+', -1)
+" au BufEnter * let w:m2=matchadd('SpellCap', '\%>121v.\+', -1)
 set splitright
 set splitbelow
 
