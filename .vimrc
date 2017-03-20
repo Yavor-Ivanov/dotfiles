@@ -116,7 +116,7 @@ TPlugin vdebug
 " NeoBundle 'joonty/vdebug.git'					" X-Debug cluent.
 " NeoBundle 'moll/vim-bbye'					    " Clear buffer; keep window.
 " NeoBundle 'Valloric/vim-operator-highlight'
-" "
+" " "
 " NeoBundle 'ternjs/tern_for_vim'
 call neobundle#end()
 
