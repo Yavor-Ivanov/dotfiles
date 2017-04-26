@@ -48,6 +48,7 @@ NeoBundle 'rdnetto/YCM-Generator'
 NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'tpope/vim-abolish' " More powerful word substitution.
 NeoBundle 'junegunn/vim-easy-align'
+NeoBundle 'sunaku/vim-dasht'
 
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
@@ -118,6 +119,7 @@ TPlugin vdebug
 " NeoBundle 'Valloric/vim-operator-highlight'
 " " "
 " NeoBundle 'ternjs/tern_for_vim'
+" NeoBundle 'sunaku/vim-dasht'
 call neobundle#end()
 
 " Required:
