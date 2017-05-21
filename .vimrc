@@ -48,6 +48,8 @@ NeoBundle 'rdnetto/YCM-Generator'
 NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'tpope/vim-abolish' " More powerful word substitution.
 NeoBundle 'junegunn/vim-easy-align'
+NeoBundle 'cakebaker/scss-syntax.vim'
+NeoBundle 'tpope/vim-haml'
 
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
@@ -358,6 +360,13 @@ set shortmess+=I
 set backspace=indent,eol,start
 set gdefault
 
+" Wraping cnext and cprev
+command! Cnext try | cnext | catch | cfirst | catch | endtry
+command! Cprev try | cprev | catch | clast | catch | endtry
+command! Lnext try | lnext | catch | lfirst | catch | endtry
+command! Lprev try | lprev | catch | llast | catch | endtry
+
+
 
 " Saner indenting hotkeys.
 nmap <S-Tab> <<
@@ -387,7 +396,8 @@ nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 nmap e :bprev!<CR>
 nmap r :bnext!<CR>
-map <leader>n :enew!<CR>i
+nmap s :Cnext<CR>
+nmap S :Cprev<CR>
 map <leader>x :call CloseWindow()<CR>
 map <leader>X :bd!<CR>
 map <leader>E :e ~/Development/www/
