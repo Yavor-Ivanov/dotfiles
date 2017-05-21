@@ -50,6 +50,7 @@ NeoBundle 'tpope/vim-abolish' " More powerful word substitution.
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'tpope/vim-haml'
+NeoBundle 'sunaku/vim-dasht'
 
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
@@ -118,8 +119,9 @@ TPlugin vdebug
 " NeoBundle 'joonty/vdebug.git'					" X-Debug cluent.
 " NeoBundle 'moll/vim-bbye'					    " Clear buffer; keep window.
 " NeoBundle 'Valloric/vim-operator-highlight'
-" "
+" " "
 " NeoBundle 'ternjs/tern_for_vim'
+" NeoBundle 'sunaku/vim-dasht'
 call neobundle#end()
 
 " Required:
