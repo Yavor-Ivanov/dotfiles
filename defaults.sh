@@ -30,3 +30,6 @@ case "$OSTYPE" in
 		export PYTHONPATH=/usr/local/Cellar/opencv/2.4.7.1/lib/python2.7/site-packages:$PYTHONPATH
 	;;
 esac
+
+PATH="~/.dotfiles/bin/dasht/bin:$PATH"
+MANPATH="~/.dotfiles/bin/dasht/man:$MANPATH"

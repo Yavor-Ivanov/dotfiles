@@ -23,6 +23,7 @@ then
 	alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 fi
 
+alias info='info --vi-keys'
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
@@ -36,3 +37,5 @@ alias p3='py3'
 
 eval $(thefuck --alias)
 alias pls='fuck'
+alias doc='dasht'
+alias docs='doc'
