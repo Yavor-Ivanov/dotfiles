@@ -49,6 +49,8 @@ NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'tpope/vim-abolish' " More powerful word substitution.
 NeoBundle 'junegunn/vim-easy-align'
 
+NeoBundle 'kshenoy/vim-signature'
+
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
 \     'windows' : 'tools\\update-dll-mingw',
@@ -152,6 +154,7 @@ NeoBundleCheck
 " \       'css': 0,
 " \   }
 " \}
+let g:EasyMotion_keys = 'qjkxmwvzlrcpgyfiduhetonas'
 let g:extra_whitespace_ignored_filetypes = ['unite', 'vimfiler', 'mail']
 autocmd BufWritePost *.coffee :CoffeeLint! | cwindow
 "
