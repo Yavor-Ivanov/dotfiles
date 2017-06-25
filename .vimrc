@@ -51,6 +51,8 @@ NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'sunaku/vim-dasht'
+NeoBundle 'xolox/vim-misc'
+NeoBundle 'xolox/vim-easytags'
 
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
@@ -157,6 +159,7 @@ NeoBundleCheck
 " \   }
 " \}
 let g:extra_whitespace_ignored_filetypes = ['unite', 'vimfiler', 'mail']
+let g:easytags_async = 1
 autocmd BufWritePost *.coffee :CoffeeLint! | cwindow
 "
 " autocmd BufWritePost *.coffee silent make!
@@ -441,7 +444,6 @@ augroup filetypedetect
 	au! BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
 augroup END
 
-
 function! CloseWindow()
 	if (index(['', 'help', 'qf'], &ft) >= 0)
 		:bd
@@ -451,6 +453,13 @@ function! CloseWindow()
 		:Bdelete
 	endif
 endfunction
+
+function! SeedTags()
+	let g:easytags_autorecurse = 1
+	UpdateTags()
+	let g:easytags_autorecurse = 0
+endfunction
+command! SeedTags call SeedTags()
 
 augroup debugging
     autocmd!
