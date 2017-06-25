@@ -54,6 +54,8 @@ NeoBundle 'sunaku/vim-dasht'
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-easytags'
 
+NeoBundle 'kshenoy/vim-signature'
+
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
 \     'windows' : 'tools\\update-dll-mingw',
@@ -158,6 +160,7 @@ NeoBundleCheck
 " \       'css': 0,
 " \   }
 " \}
+let g:EasyMotion_keys = 'qjkxmwvzlrcpgyfiduhetonas'
 let g:extra_whitespace_ignored_filetypes = ['unite', 'vimfiler', 'mail']
 let g:easytags_async = 1
 autocmd BufWritePost *.coffee :CoffeeLint! | cwindow
