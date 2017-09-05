@@ -470,4 +470,8 @@ augroup debugging
 	au! BufRead,BufNewFile,BufEnter Debugger* set nobuflisted | map <buffer> o <CR>
 augroup END
 
-autocmd FileType python setlocal nonumber
+if has("autocmd")
+  if v:version > 701
+    autocmd Syntax * call matchadd('Todo',  '\W\zs\(@Refactor\|@Bug\|@Check\|@Incomplete\|NOTE\|@Speed\|@Cleanup\)')
+  endif
+endif
