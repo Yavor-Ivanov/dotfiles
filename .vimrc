@@ -51,6 +51,8 @@ NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'sunaku/vim-dasht'
+NeoBundle 'xolox/vim-misc'
+NeoBundle 'xolox/vim-easytags'
 
 NeoBundle 'kshenoy/vim-signature'
 
@@ -160,6 +162,7 @@ NeoBundleCheck
 " \}
 let g:EasyMotion_keys = 'qjkxmwvzlrcpgyfiduhetonas'
 let g:extra_whitespace_ignored_filetypes = ['unite', 'vimfiler', 'mail', 'qf']
+let g:easytags_async = 1
 autocmd BufWritePost *.coffee :CoffeeLint! | cwindow
 "
 " autocmd BufWritePost *.coffee silent make!
@@ -444,7 +447,6 @@ augroup filetypedetect
 	au! BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
 augroup END
 
-
 function! CloseWindow()
 	if (index(['', 'help', 'qf'], &ft) >= 0)
 		:bd
@@ -455,10 +457,21 @@ function! CloseWindow()
 	endif
 endfunction
 
+function! SeedTags()
+	let g:easytags_autorecurse = 1
+	UpdateTags()
+	let g:easytags_autorecurse = 0
+endfunction
+command! SeedTags call SeedTags()
+
 augroup debugging
     autocmd!
     autocmd FileType qf set nobuflisted
 	au! BufRead,BufNewFile,BufEnter Debugger* set nobuflisted | map <buffer> o <CR>
 augroup END
 
-autocmd FileType python setlocal nonumber
+if has("autocmd")
+  if v:version > 701
+    autocmd Syntax * call matchadd('Todo',  '\W\zs\(@Refactor\|@Bug\|@Check\|@Incomplete\|NOTE\|@Speed\|@Cleanup\)')
+  endif
+endif
