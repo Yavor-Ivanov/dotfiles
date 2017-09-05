@@ -470,8 +470,11 @@ augroup debugging
 	au! BufRead,BufNewFile,BufEnter Debugger* set nobuflisted | map <buffer> o <CR>
 augroup END
 
+
+au! BufNewFile,BufRead *.todo setf todo
 if has("autocmd")
   if v:version > 701
     autocmd Syntax * call matchadd('Todo',  '\W\zs\(@Refactor\|@Bug\|@Check\|@Incomplete\|NOTE\|@Speed\|@Cleanup\)')
+    autocmd FileType todo call matchadd('Todo',  '\W\zs\(\[x\]\|\[X\]\|\[?\]\)')
   endif
 endif
