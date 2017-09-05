@@ -159,7 +159,7 @@ NeoBundleCheck
 " \   }
 " \}
 let g:EasyMotion_keys = 'qjkxmwvzlrcpgyfiduhetonas'
-let g:extra_whitespace_ignored_filetypes = ['unite', 'vimfiler', 'mail']
+let g:extra_whitespace_ignored_filetypes = ['unite', 'vimfiler', 'mail', 'qf']
 autocmd BufWritePost *.coffee :CoffeeLint! | cwindow
 "
 " autocmd BufWritePost *.coffee silent make!
@@ -432,13 +432,13 @@ map F <Plug>(easymotion-bd-w)
 let g:ycm_register_as_syntastic_checker = 0
 let g:ycm_enable_diagnostic_signs = 0
 let g:ycm_enable_diagnostic_highlighting = 0
-let g:phpcomplete_index_composer_command = "composer"
+" let g:phpcomplete_index_composer_command = "composer --no-ansi"
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
+" autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
 :autocmd BufReadPost quickfix nnoremap <buffer> o <CR>
 augroup filetypedetect
 	au! BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python

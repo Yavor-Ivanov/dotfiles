@@ -26,7 +26,7 @@ case "$OSTYPE" in
 		# NOTE: Run `brew install coreutils` on OSX to use the
 		# standard Linux utilities.
 		PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-		MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+		MANPATH="/usr/local/opt/coreutils/libexec/gnuman:~/.dotfiles/bin/dasht/man:$MANPATH"
 		export PYTHONPATH=/usr/local/Cellar/opencv/2.4.7.1/lib/python2.7/site-packages:$PYTHONPATH
 	;;
 esac
