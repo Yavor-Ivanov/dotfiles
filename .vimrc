@@ -288,12 +288,14 @@ augroup END
 
 
 "  Set user preferences. ###################################
+let mapleader = "\<Space>"
 set regexpengine=1
 set exrc	" Allow per-project configs,
 set secure	" but disable unsafe shell writes and autocmd-s.
 set listchars=tab:>-,extends:>,precedes:<
 set nolist
 set modelines=5
+noremap <leader>q q
 noremap q <nop>
 noremap Q <nop>
 set encoding=utf-8
@@ -330,9 +332,9 @@ set foldlevel=99
 set tabstop=4
 set shiftwidth=4
 set cindent
-let mapleader = "\<Space>"
 nmap <leader>l V
 map <leader>a ^
+map <leader>A 0
 map <leader>c :set list!<CR>
 map <leader>z g_
 nmap <leader>b :Build<CR>
