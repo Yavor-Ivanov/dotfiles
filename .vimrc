@@ -476,7 +476,7 @@ augroup END
 au! BufNewFile,BufRead *.todo setf todo
 if has("autocmd")
   if v:version > 701
-    autocmd Syntax * call matchadd('Todo',  '\W\zs\(@Refactor\|@Bug\|@Check\|@Incomplete\|NOTE\|@Speed\|@Cleanup\|@Correctness\|@Cutnpaste\)')
+    autocmd Syntax * call matchadd('Todo',  '\W\zs\(@Refactor\|@Bug\|@Check\|@Incomplete\|NOTE\|@Speed\|@Cleanup\|@Noship\|@Correctness\|@Cutnpaste\)')
     autocmd FileType todo call matchadd('Todo',  '\W\zs\(\[x\]\|\[X\]\|\[?\]\|\[\d\+/\d\+\]\)')
   endif
 endif
