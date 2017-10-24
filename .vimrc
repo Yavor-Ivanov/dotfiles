@@ -53,6 +53,7 @@ NeoBundle 'tpope/vim-haml'
 NeoBundle 'sunaku/vim-dasht'
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-easytags'
+NeoBundle 'mkusher/padawan.vim'
 
 NeoBundle 'kshenoy/vim-signature'
 
@@ -188,6 +189,7 @@ let g:ctrp_custom_ignore = {
 			\ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp$',
 			\ 'file': '\.so$\|\.dat$|\.DS_Store$'
 			\ }
+let g:easytags_opts = ['--fields=+aimlS --languages=php']
 let g:php_syntax_extensions_enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline_powerline_fonts = 1
@@ -377,7 +379,6 @@ command! Lnext try | lnext | catch | lfirst | catch | endtry
 command! Lprev try | lprev | catch | llast | catch | endtry
 
 
-
 " Saner indenting hotkeys.
 nmap <S-Tab> <<
 nmap <Tab> >>
@@ -437,13 +438,14 @@ map F <Plug>(easymotion-bd-w)
 let g:ycm_register_as_syntastic_checker = 0
 let g:ycm_enable_diagnostic_signs = 0
 let g:ycm_enable_diagnostic_highlighting = 0
-" let g:phpcomplete_index_composer_command = "composer --no-ansi"
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-" autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
+" autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
+autocmd FileType php setlocal omnifunc=padawan#Complete
+
 :autocmd BufReadPost quickfix nnoremap <buffer> o <CR>
 augroup filetypedetect
 	au! BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
