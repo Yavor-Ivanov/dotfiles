@@ -362,7 +362,7 @@ set splitbelow
 " Fix annoying default behaviour.
 nnoremap gg ggzz
 nnoremap n nzz
-nnoremap N nzz
+nnoremap N Nzz
 nnoremap } }zz
 nnoremap { {zz
 nnoremap j gj
