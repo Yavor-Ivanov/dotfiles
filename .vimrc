@@ -31,6 +31,7 @@ NeoBundle 'sickill/vim-monokai'					" Monokai theme.
 NeoBundle 'Yavor-Ivanov/min16'					" Minimal syntax highlighting for 16 colour terminals.
 NeoBundle 'Yavor-Ivanov/airline-monokai-subtle.vim'		" Monokai theme for vim-airline.
 NeoBundle 'tpope/vim-fugitive'					" Git wrapper.
+NeoBundle 'christoomey/vim-conflicted'          " Better conflict resolution
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'bronson/vim-trailing-whitespace'
@@ -482,3 +483,14 @@ if has("autocmd")
     autocmd FileType todo call matchadd('Todo',  '\W\zs\(\[x\]\|\[X\]\|\[?\]\|\[\d\+/\d\+\]\)')
   endif
 endif
+
+let g:easy_align_delimiters = {
+\ '$': {
+\     'pattern':         '\$\w\+\(= \w+\)\=\(,\)\=',
+\     'delimiter_align': 'l'
+\   },
+\ '\': {
+\ 'pattern':         '\\',
+\ 'delimiter_align': 'l'
+\ },
+\ }
