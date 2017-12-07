@@ -344,7 +344,7 @@ nmap <leader>b :Build<CR>
 set pastetoggle=<F12>
 set nonumber
 syntax sync minlines=120
-set synmaxcol=200
+set synmaxcol=300
 set cc=0
 " I treat column 80 as a strong styllistic suggestion, rather than an
 " unbreakable rule. Whenever I trigger one of these highlights, I will try to
@@ -494,3 +494,7 @@ let g:easy_align_delimiters = {
 \ 'delimiter_align': 'l'
 \ },
 \ }
+
+let g:dasht_filetype_docsets = {}
+let g:dasht_filetype_docsets['php'] = ['php', 'Symfony', 'Doctrine_ORM']
+let g:dasht_filetype_docsets['cpp'] = ['^c$', 'boost', 'OpenGL']

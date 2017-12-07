@@ -35,3 +35,4 @@ PATH="~/.dotfiles/bin/dasht/bin:$PATH"
 MANPATH="~/.dotfiles/bin/dasht/man:$MANPATH"
 
 set editing-mode vi
+set -o vi
