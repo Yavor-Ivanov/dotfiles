@@ -1,0 +1,23 @@
+[user]
+	name = Yavor Ivanov
+	email = yavor@devlabs.bg
+[core]
+	excludesfile = ~/.gitignore
+[diff]
+	tool = vimdiff
+	prompt = false
+[difftool]
+	prompt = false
+[alias]
+	d = difftool
+[merge]
+	tool = diffconflicts
+	; conflictstyle = diff3
+[mergetool]
+	prompt = false
+	keepBackup = false
+[mergetool "diffconflicts"]
+	cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
+	trustExitCode = true
+[pager]
+	stash = false

@@ -9,3 +9,4 @@ ln -s "$DIR/.tmux.conf" ~/.tmux.conf
 ln -s "$DIR/.w3m" ~/.w3m
 ln -s "$DIR/.tmux" ~/.tmux
 sudo ln -s "$DIR/bin/" /usr/local/bin/
+ln -s "$DIR/.gitconfig" ~/.gitconfig
