@@ -343,7 +343,7 @@ map <leader>z g_
 nmap <leader>b :Build<CR>
 set pastetoggle=<F12>
 set nonumber
-syntax sync minlines=120
+syntax sync fromstart
 set synmaxcol=300
 set cc=0
 " I treat column 80 as a strong styllistic suggestion, rather than an
@@ -479,7 +479,7 @@ augroup END
 au! BufNewFile,BufRead *.todo setf todo
 if has("autocmd")
   if v:version > 701
-    autocmd Syntax * call matchadd('Todo',  '\W\zs\(@Refactor\|@Bug\|@Check\|@Incomplete\|NOTE\|@Speed\|@Cleanup\|@Noship\|@Correctness\|@Cutnpaste\)')
+    autocmd Syntax * call matchadd('Todo',  '\W\zs\(@Refactor\|@Bug\|@Check\|@Incomplete\|NOTE\|@Speed\|@Cleanup\|@Noship\|@Correctness\|@Cutnpaste\|@Note\)')
     autocmd FileType todo call matchadd('Todo',  '\W\zs\(\[x\]\|\[X\]\|\[?\]\|\[\d\+/\d\+\]\)')
   endif
 endif
