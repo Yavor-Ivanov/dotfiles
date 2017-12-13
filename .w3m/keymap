@@ -229,20 +229,20 @@ keymap a ADD_BOOKMARK
 keymap :b VIEW_BOOKMARK
 
 ########## tab ##########
-keymap d CLOSE_TAB
-keymap gh GOTO http://www.google.com/en
-keymap gH TAB_GOTO http://www.google.com/en
+keymap x CLOSE_TAB
+keymap gh GOTO https://www.google.com/en
+keymap gH TAB_GOTO https://www.google.com/en
 keymap C-t NEW_TAB
 keymap gt NEXT_TAB
 keymap gT PREV_TAB
-keymap C-wL TAB_RIGHT
-keymap C-wH TAB_LEFT
+keymap r TAB_RIGHT
+keymap e TAB_LEFT
 keymap t TAB_GOTO
 keymap T TAB_MENU
 
 ########## quit ##########
-keymap ZZ EXIT
-keymap C-Q EXIT
-keymap ZQ QUIT
+# keymap ZZ EXIT
+# keymap C-Q EXIT
+# keymap ZQ QUIT
 keymap :q QUIT
 keymap q QUIT
