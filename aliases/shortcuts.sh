@@ -39,3 +39,5 @@ eval $(thefuck --alias)
 alias pls='fuck'
 alias doc='dasht'
 alias docs='doc'
+
+= () { echo "$@" | bc; }
