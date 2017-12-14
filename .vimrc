@@ -57,6 +57,7 @@ NeoBundle 'xolox/vim-easytags'
 NeoBundle 'mkusher/padawan.vim'
 
 NeoBundle 'kshenoy/vim-signature'
+NeoBundle 'yuratomo/w3m.vim'
 
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
