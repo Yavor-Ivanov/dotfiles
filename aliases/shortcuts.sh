@@ -41,3 +41,4 @@ alias doc='dasht'
 alias docs='doc'
 
 = () { echo "$@" | bc; }
+json_pprint () { echo $1 | python -m json.tool }
