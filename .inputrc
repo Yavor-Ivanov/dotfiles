@@ -1,0 +1,9 @@
+$include /etc/inputrc
+set editing-mode vi
+
+$if mode=vi
+	"\\":history-search-forward
+	"?":history-search-backward
+$endif
+
+set completion-ignore-case on
