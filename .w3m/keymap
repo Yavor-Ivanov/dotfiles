@@ -233,10 +233,10 @@ keymap x CLOSE_TAB
 keymap gh GOTO https://www.google.com/en
 keymap gH TAB_GOTO https://www.google.com/en
 keymap C-t NEW_TAB
-keymap gt NEXT_TAB
-keymap gT PREV_TAB
-keymap r TAB_RIGHT
-keymap e TAB_LEFT
+keymap r NEXT_TAB
+keymap e PREV_TAB
+keymap > TAB_RIGHT
+keymap < TAB_LEFT
 keymap t TAB_GOTO
 keymap T TAB_MENU
 
