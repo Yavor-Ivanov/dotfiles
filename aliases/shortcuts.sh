@@ -39,6 +39,8 @@ eval $(thefuck --alias)
 alias pls='fuck'
 alias doc='dasht'
 alias docs='doc'
+alias br='breadability'
+alias rr='br'
 
 = () { echo "$@" | bc; }
 json_pprint () { echo $1 | python -m json.tool; }

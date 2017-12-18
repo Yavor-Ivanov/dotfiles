@@ -239,6 +239,8 @@ keymap > TAB_RIGHT
 keymap < TAB_LEFT
 keymap t TAB_GOTO
 keymap T TAB_MENU
+keymap @ READ_SHELL
+keymap V VIEW
 
 ########## quit ##########
 # keymap ZZ EXIT
