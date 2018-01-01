@@ -11,3 +11,4 @@ ln -s "$DIR/.tmux" ~/.tmux
 sudo ln -s "$DIR/bin/" /usr/local/bin/
 ln -s "$DIR/.gitconfig" ~/.gitconfig
 ln -s "$DIR/.inputrc" ~/.inputrc
+ln -s "$DIR/.weechat" ~/.weechat
