@@ -57,7 +57,6 @@ NeoBundle 'xolox/vim-easytags'
 NeoBundle 'mkusher/padawan.vim'
 
 NeoBundle 'kshenoy/vim-signature'
-NeoBundle 'yuratomo/w3m.vim'
 
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
@@ -305,7 +304,7 @@ noremap Q <nop>
 set encoding=utf-8
 set swapfile
 set dir=~/tmp
-set keymap=bulgarian-phonetic
+" set keymap=bulgarian-phonetic
 set iminsert=0
 set imsearch=-1
 runtime! ftplugin/man.vim
