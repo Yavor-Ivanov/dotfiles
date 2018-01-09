@@ -320,7 +320,7 @@ set wildmenu 	" Command completion.
 set wildignore=*.swp,*.bak,*.pyc,*.class,*/staticfiles/*,*/build/*
 set history=1000
 set undolevels=1000
-set title
+" set title
 set t_Co=256
 colors min16
 set nowrap

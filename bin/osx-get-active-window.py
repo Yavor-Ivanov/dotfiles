@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/python
 
 from AppKit import NSWorkspace
 active_app_name = NSWorkspace.sharedWorkspace().frontmostApplication().localizedName()
