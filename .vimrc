@@ -491,9 +491,13 @@ let g:easy_align_delimiters = {
 \     'delimiter_align': 'l'
 \   },
 \ '\': {
-\ 'pattern':         '\\',
-\ 'delimiter_align': 'l'
-\ },
+\     'pattern':         '\\',
+\     'delimiter_align': 'l'
+\   },
+\ '/': {
+\     'pattern':         '\/',
+\     'delimiter_align': 'l'
+\   },
 \ }
 
 let g:dasht_filetype_docsets = {}
