@@ -337,6 +337,7 @@ set shiftwidth=4
 set cindent
 nmap <leader>l V
 map <leader>a ^
+map <leader>o :EasyAlign<CR>
 map <leader>A 0
 map <leader>c :set list!<CR>
 map <leader>z g_
@@ -479,7 +480,7 @@ augroup END
 au! BufNewFile,BufRead *.todo setf todo
 if has("autocmd")
   if v:version > 701
-    autocmd Syntax * call matchadd('Todo',  '\W\zs\(@Refactor\|@Bug\|@Check\|@Incomplete\|NOTE\|@Speed\|@Cleanup\|@Noship\|@Correctness\|@Cutnpaste\|@Note\)')
+    autocmd Syntax * call matchadd('Todo',  '\W\zs\(@Refactor\|@Bug\|@Check\|@Incomplete\|NOTE\|@Speed\|@Cleanup\|@Noship\|@Correctness\|@Cutnpaste\|@Note\|@Todo\)')
     autocmd FileType todo call matchadd('Todo',  '\W\zs\(\[x\]\|\[X\]\|\[?\]\|\[\d\+/\d\+\]\)')
   endif
 endif
