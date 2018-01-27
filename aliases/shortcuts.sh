@@ -42,5 +42,5 @@ alias docs='doc'
 alias br='breadability'
 alias rr='br'
 
-= () { echo "$@" | bc; }
+= () { echo "$@" | bc -l; }
 json_pprint () { echo $1 | python -m json.tool; }
