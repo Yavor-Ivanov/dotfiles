@@ -21,4 +21,4 @@ do
 	create_session_alias $name
 done
 
-create_session_alias "local" false
+create_session_alias "lcl" false
