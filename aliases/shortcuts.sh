@@ -13,7 +13,14 @@ alias c='clear'
 alias k='clear'
 alias cls='clear'
 
-alias up='cd ..'
+function up() {
+	local count=${1:-1}
+	local i=0;
+	while [ $i -lt $count ]; do
+		cd ..
+		let i=i+1
+	done
+}
 alias back='cd -'
 alias cd..='up'
 alias md='mkdir -p'
