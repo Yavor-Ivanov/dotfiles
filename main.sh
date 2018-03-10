@@ -14,6 +14,8 @@
 #!/bin/bash
 
 if [ -n "$ZSH_VERSION" ]; then
+	setopt shwordsplit
+
     # Quiet, please
     alias pushd='pushd > /dev/null'
     alias popd='pushd > /dev/null'
