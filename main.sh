@@ -13,55 +13,72 @@
 # DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #!/bin/bash
 
-# Quiet, please
-pushd () {
-    command pushd "$@" > /dev/null
-}
+if [ -n "$ZSH_VERSION" ]; then
+    # Quiet, please
+    alias pushd='pushd > /dev/null'
+    alias popd='pushd > /dev/null'
 
-popd () {
-    command popd "$@" > /dev/null
-}
+    DIR=$(dirname ${(%):-%N})
+elif [ -n "$BASH_VERSION" ]; then
+    # Quiet, please
+    pushd () {
+        pushd "$@" > /dev/null
+    }
 
-DIR=$(dirname $BASH_SOURCE[0])
-shopt -s expand_aliases
+    popd () {
+        popd "$@" > /dev/null
+    }
+    DIR=$(dirname $BASH_SOURCE[0])
+    shopt -s expand_aliases
+fi
+
 pushd $DIR
+DIR=$(pwd)
 
 function recursive()
 {
-	local cmd=$1
-	local incl_path=$2
-	local absolute=$3
-	shift
-	shopt -s expand_aliases
-	if [[ -z $absolute ]]
-	then
-		incl_path="$DIR/$incl_path"
-	fi
+    local cmd=$1
+    local incl_path=$2
+    local absolute=$3
+    shift
 
-	while read f
-	do
-		$cmd "$f"
-	done <<< "$(echo $incl_path | tr " " "\n")"
-	return 0
+    if [ -n "$ZSH_VERSION" ]; then
+        if [[ -z $absolute ]]; then
+            incl_path="$DIR/$incl_path"
+        fi
+
+        while read f; do
+            $cmd "$f"
+        done <<< "$(echo ${~incl_path} | tr " " "\n")"
+    elif [ -n "$BASH_VERSION" ]; then
+        shopt -s expand_aliases
+        if [[ -z $absolute ]]; then
+            incl_path="$DIR/$incl_path"
+        fi
+
+        while read f; do
+            $cmd "$f"
+        done <<< "$(echo ${incl_path} | tr " " "\n")"
+    fi
+    return 0
 }
 
 function include()
 {
-	source "$1" "$@"
+    source "$1" "$@"
 }
 
 function invoke()
 {
-	local file=`realpath $1`
-	if [[ `readlink -e $file` ]]
-	then
-		. $file
-	else
-		echo "Cannot invoke $file! No such file found."
-	fi
+    local file="$(realpath $1)"
+    if [[ `readlink -e $file` ]]; then
+        . $file
+    else
+        echo "Cannot invoke $file! No such file found."
+    fi
 }
 
 recursive include "defaults.sh"
 recursive include "aliases/*"
-invoke "local/*"
+# invoke "./local/*"
 popd

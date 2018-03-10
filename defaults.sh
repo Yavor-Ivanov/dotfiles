@@ -16,20 +16,24 @@ esac
 
 case "$TERM" in
 xterm*|rxvt*|*color)
-	PS1="\u@\h:\w\\$ \[$(tput sgr0)\]"
+    if [ -n "$ZSH_VERSION" ]; then
+        PS1=$'%F{default}%n@%m:%F{default}%d%f$ '
+    elif [ -n "$BASH_VERSION" ]; then
+        PS1="\u@\h:\w\\$ \[$(tput sgr0)\]"
+    fi
     ;;
 *)
     ;;
 esac
 
 case "$OSTYPE" in
-	darwin*)
-		# NOTE: Run `brew install coreutils` on OSX to use the
-		# standard Linux utilities.
-		PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-		MANPATH="/usr/local/opt/coreutils/libexec/gnuman:~/.dotfiles/bin/dasht/man:$MANPATH"
-		export PYTHONPATH=/usr/local/Cellar/opencv/2.4.7.1/lib/python2.7/site-packages:$PYTHONPATH
-	;;
+    darwin*)
+        # NOTE: Run `brew install coreutils` on OSX to use the
+        # standard Linux utilities.
+        PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+        MANPATH="/usr/local/opt/coreutils/libexec/gnuman:~/.dotfiles/bin/dasht/man:$MANPATH"
+        export PYTHONPATH=/usr/local/Cellar/opencv/2.4.7.1/lib/python2.7/site-packages:$PYTHONPATH
+    ;;
 esac
 
 PATH="~/.dotfiles/bin/dasht/bin:$PATH"
