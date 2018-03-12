@@ -7,10 +7,10 @@ if !1 | finish | endif
 runtime bundle/tplugin_vim/macros/tplugin.vim
 
 if has('vim_starting')
-	set nocompatible               " Be iMproved
+    set nocompatible               " Be iMproved
 
-	" Required:
-	set runtimepath+=~/.vim/bundle/neobundle.vim/
+    " Required:
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
 " Required:
@@ -187,9 +187,9 @@ endif
 
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ctrp_custom_ignore = {
-			\ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp$',
-			\ 'file': '\.so$\|\.dat$|\.DS_Store$'
-			\ }
+            \ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp$',
+            \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+            \ }
 let g:easytags_opts = ['--fields=+aimlS --languages=php']
 let g:php_syntax_extensions_enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
@@ -201,8 +201,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " let g:pymode_options_colorcolumn = 120
 let g:pymode_options_max_line_length = 120
 let g:pymode_lint_options_pep8 = {
-			\ 'max_line_length': g:pymode_options_max_line_length,
-			\ 'ignore': 'E251'}
+            \ 'max_line_length': g:pymode_options_max_line_length,
+            \ 'ignore': 'E251'}
 let g:pymode_indent = 1
 " let g:neocomplete#enable_at_startup = 1
 " let g:neocomplete#enable_smart_case = 1 " Use smartcase.
@@ -220,38 +220,38 @@ let g:bufferline_solo_highlight = 1
 let g:airline_section_x = ''
 let g:airline_section_y = ''
 let g:airline_mode_map = {
-			\ '__' : '-',
-			\ 'n'  : 'N',
-			\ 'i'  : 'I',
-			\ 'R'  : 'R',
-			\ 'c'  : 'C',
-			\ 'v'  : 'V',
-			\ 'V'  : 'V',
-			\ '' : 'V',
-			\ 's'  : 'S',
-			\ 'S'  : 'S',
-			\ '' : 'S',
-			\ }
+            \ '__' : '-',
+            \ 'n'  : 'N',
+            \ 'i'  : 'I',
+            \ 'R'  : 'R',
+            \ 'c'  : 'C',
+            \ 'v'  : 'V',
+            \ 'V'  : 'V',
+            \ '' : 'V',
+            \ 's'  : 'S',
+            \ 'S'  : 'S',
+            \ '' : 'S',
+            \ }
 
 let g:slimv_swank_cmd = '! screen sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp &'
 let g:slimv_repl_split = 0
 
 let g:quickrun_config = {}
 let g:quickrun_config.handmade = {
-			\ 'command' : simplify(getcwd() . '/../build'),
-			\ 'outputter' : 'quickfix',
-			\ }
+            \ 'command' : simplify(getcwd() . '/../build'),
+            \ 'outputter' : 'quickfix',
+            \ }
 let g:quickrun_config.node = {
-			\ 'command' : 'node',
-			\ 'outputter' : 'quickfix',
-			\ }
+            \ 'command' : 'node',
+            \ 'outputter' : 'quickfix',
+            \ }
 let g:quickrun_config.sage = {
-			\ 'command' : "sage",
-			\ 'outputter' : 'quickfix',
-			\ }
+            \ 'command' : "sage",
+            \ 'outputter' : 'quickfix',
+            \ }
 
 
-			" \ 'command' : "sage -t %%",
+            " \ 'command' : "sage -t %%",
 au! BufRead,BufNewFile *.sage,*.spyx,*.pyx let g:project_name='sage'
 
 
@@ -261,32 +261,32 @@ command! ClearQuickfixList cexpr []
 let g:project_name = ''
 
 function! Build()
-	:silent w
-	:ClearQuickfixList
-	exec ':QuickRun ' . g:project_name
-	:copen
-	if line('$') == 1 && getline(1) == ''
-		:echom "Build completed with 0 errors."
-		:close
-	endif
+    :silent w
+    :ClearQuickfixList
+    exec ':QuickRun ' . g:project_name
+    :copen
+    if line('$') == 1 && getline(1) == ''
+        :echom "Build completed with 0 errors."
+        :close
+    endif
 endfunction
 command! Build call Build()
 
 " Email options ##########################
 function! EmailOptions()
-	set wrap
-	set linebreak
-	set nolist
-	set wrapmargin=0
-	set textwidth=0
-	set expandtab
-	setlocal fo+=aw
-	7j
+    set wrap
+    set linebreak
+    set nolist
+    set wrapmargin=0
+    set textwidth=0
+    set expandtab
+    setlocal fo+=aw
+    7j
 endfunction
 
 augroup EmailRules()
-	autocmd!
-	autocmd FileType mail call EmailOptions()
+    autocmd!
+    autocmd FileType mail call EmailOptions()
 augroup END
 
 
@@ -450,30 +450,30 @@ autocmd FileType php setlocal omnifunc=padawan#Complete
 
 :autocmd BufReadPost quickfix nnoremap <buffer> o <CR>
 augroup filetypedetect
-	au! BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
+    au! BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
 augroup END
 
 function! CloseWindow()
-	if (index(['', 'help', 'qf'], &ft) >= 0)
-		:bd
-	elseif (&ft == 'nerdtree')
-		:NERDTreeTabsClose
-	else
-		:Bdelete
-	endif
+    if (index(['', 'help', 'qf'], &ft) >= 0)
+        :bd
+    elseif (&ft == 'nerdtree')
+        :NERDTreeTabsClose
+    else
+        :Bdelete
+    endif
 endfunction
 
 function! SeedTags()
-	let g:easytags_autorecurse = 1
-	UpdateTags()
-	let g:easytags_autorecurse = 0
+    let g:easytags_autorecurse = 1
+    UpdateTags()
+    let g:easytags_autorecurse = 0
 endfunction
 command! SeedTags call SeedTags()
 
 augroup debugging
     autocmd!
     autocmd FileType qf set nobuflisted
-	au! BufRead,BufNewFile,BufEnter Debugger* set nobuflisted | map <buffer> o <CR>
+    au! BufRead,BufNewFile,BufEnter Debugger* set nobuflisted | map <buffer> o <CR>
 augroup END
 
 
@@ -503,3 +503,7 @@ let g:easy_align_delimiters = {
 let g:dasht_filetype_docsets = {}
 let g:dasht_filetype_docsets['php'] = ['php', 'Symfony', 'Doctrine_ORM']
 let g:dasht_filetype_docsets['cpp'] = ['^c$', 'boost', 'OpenGL']
+
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
