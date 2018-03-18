@@ -44,6 +44,8 @@ set -o vi
 
 
 if [ -n "$ZSH_VERSION" ]; then
+	export KEYTIMEOUT=1 # Don't wait around to switch modes
+
 	setopt append_history
 	setopt extended_history
 	setopt hist_expire_dups_first
