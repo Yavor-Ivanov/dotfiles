@@ -5,6 +5,7 @@ export LANG=en_US.UTF-8
 export VISUAL=vim
 export EDITOR=$VISUAL
 export BROWSER=w3m
+export PAGER='less -s -M +Gg'
 
 default_host=juicebox
 default_client=mosh
@@ -28,7 +29,7 @@ case "$OSTYPE" in
 		# standard Linux utilities.
 		PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 		MANPATH="/usr/local/opt/coreutils/libexec/gnuman:~/.dotfiles/bin/dasht/man:$MANPATH"
-		export PYTHONPATH=/usr/local/Cellar/opencv/2.4.7.1/lib/python2.7/site-packages:$PYTHONPATH
+		export PYTHONPATH=$(brew --prefix)/lib/python2.7/site-packages:/usr/local/Cellar/opencv/2.4.7.1/lib/python2.7/site-packages:$PYTHONPATH
 	;;
 esac
 

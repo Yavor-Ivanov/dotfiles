@@ -33,16 +33,21 @@ version_control() {
 		add)
 			git add $cmd_args
 		;;
+		diff)
+			git diff $cmd_args
+		;;
 		*)
 			echo "ERROR: '$cmd' is not implemented!"
 		;;
 	esac
 }
 va() { version_control add "$@"; }
+vc() { version_control commit "$@"; }
 vw() { version_control switch "$@"; }
 vu() { version_control update "$@"; }
 vp() { version_control push "$@"; }
 vs() { version_control status "$@"; }
 vl() { version_control log "$@"; }
+vd() { version_control diff "$@"; }
 alias u='vu'
 alias p='vp'

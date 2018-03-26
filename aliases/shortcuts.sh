@@ -51,3 +51,8 @@ alias rr='br'
 
 = () { echo "$@" | bc -l; }
 json_pprint () { echo $1 | python -m json.tool; }
+
+ecr_login() {
+    local login_str="$(aws ecr get-login | sed 's/-e .* //')"
+    eval "$login_str"
+}

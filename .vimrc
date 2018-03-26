@@ -55,6 +55,7 @@ NeoBundle 'sunaku/vim-dasht'
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-easytags'
 NeoBundle 'mkusher/padawan.vim'
+NeoBundle 'mhinz/vim-grepper'
 
 NeoBundle 'kshenoy/vim-signature'
 
@@ -425,7 +426,7 @@ nmap <leader>H :sp %
 " Configure plugin shortcuts #################################
 map <leader>td <Plug>TaskList
 map <leader>f :NERDTreeTabsOpen<CR>
-nmap <leader>s <ESC>:Ag<SPACE>
+nmap <leader>s <ESC>:GrepperAg<SPACE>
 map <leader>u :GundoToggle<CR>
 " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>" " Neocomplete tab look forward.
 " inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "<TAB>" " Neocomplete tab look backwards.
