@@ -29,7 +29,6 @@ case "$OSTYPE" in
 		# standard Linux utilities.
 		PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 		MANPATH="/usr/local/opt/coreutils/libexec/gnuman:~/.dotfiles/bin/dasht/man:$MANPATH"
-		export PYTHONPATH=$(brew --prefix)/lib/python2.7/site-packages:/usr/local/Cellar/opencv/2.4.7.1/lib/python2.7/site-packages:$PYTHONPATH
 	;;
 esac
 

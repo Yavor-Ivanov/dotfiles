@@ -56,3 +56,7 @@ ecr_login() {
     local login_str="$(aws ecr get-login | sed 's/-e .* //')"
     eval "$login_str"
 }
+
+mana() {
+	man -a $1 | $PAGER
+}
