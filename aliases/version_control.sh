@@ -24,6 +24,9 @@ version_control() {
 		switch)
 			git checkout "$(get_first_match "${cmd_args[0]}")"
 		;;
+		switch-previous)
+			git checkout @{-1}
+		;;
 		status)
 			git status
 		;;
@@ -64,6 +67,7 @@ version_control() {
 va() { version_control add "$@"; }
 vc() { version_control commit "$@"; }
 vw() { version_control switch "$@"; }
+vwp() { version_control switch-previous "$@"; }
 vu() { version_control update "$@"; }
 vum() { version_control update-merge "$@"; }
 vp() { version_control push "$@"; }
