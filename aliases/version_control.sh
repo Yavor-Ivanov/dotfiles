@@ -34,7 +34,13 @@ version_control() {
 			git log $cmd_args
 		;;
 		push)
-			git push $cmd_args
+			new_branch="$(git push $cmd_args --dry-run 2>&1 | g 'fatal')"
+			if [ -n "$new_branch" ]; then
+				branch_name="$(get_first_match ${cmd_args[0]})"
+				git push --set-upstream origin "$branch_name" $cmd_args
+			else
+				git push $cmd_args
+			fi
 		;;
 		commit)
 			git commit $cmd_args
