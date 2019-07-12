@@ -48,6 +48,7 @@ alias doc='dasht'
 alias docs='doc'
 alias br='breadability'
 alias rr='br'
+alias s='ddgr'
 
 = () { echo "$@" | bc -l; }
 json_pprint () { echo $1 | python -m json.tool; }
@@ -59,4 +60,14 @@ ecr_login() {
 
 mana() {
 	man -a $1 | $PAGER
+}
+
+lag() {
+	ls -la | grep $@
+}
+
+wttr() {
+    local request="wttr.in/${1-Varna}?F"
+    [ "$COLUMNS" -lt 125 ] && request+='&n'
+    curl -H "Accept-Language: ${LANG%_*}" --compressed "$request"
 }

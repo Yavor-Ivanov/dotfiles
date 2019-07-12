@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+tmux list-windows | grep -q ! && afplay /System/Library/Sounds/Funk.aiff
+exit 0

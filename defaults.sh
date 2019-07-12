@@ -11,6 +11,9 @@ default_host=juicebox
 default_client=mosh
 default_user=ppm
 
+export lines=$(tput lines)
+export columns=$(tput cols)
+
 case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac

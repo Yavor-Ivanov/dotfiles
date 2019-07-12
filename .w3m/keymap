@@ -172,6 +172,8 @@ keymap G END
 keymap C-d NEXT_PAGE
 keymap C-u PREV_PAGE
 keymap zz CENTER_V
+keymap J UP
+keymap K DOWN
 ########## cursor ##########
 keymap l MOVE_RIGHT
 keymap h MOVE_LEFT

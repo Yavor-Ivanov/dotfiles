@@ -1,0 +1,16 @@
+connections=('juicebox' 'payslip')
+req_connect=$1
+
+cat << EOF | osascript
+tell application "Tunnelblick"
+    disconnect "payslip"
+    disconnect "juicebox"
+	delay 3
+    connect "$req_connect"
+    get state of first configuration where name = "$req_connect"
+    repeat until result = "CONNECTED"
+        delay 1
+        get state of first configuration where name = "$req_connect"
+    end repeat
+end tell
+EOF

@@ -33,10 +33,15 @@ version_control() {
 		log)
 			git log $cmd_args
 		;;
+		my_log)
+			my_email="$(git config user.email)"
+			git log --branches --author="$my_email" $cmd_args
+		;;
 		push)
 			new_branch="$(git push $cmd_args --dry-run 2>&1 | g 'fatal')"
 			if [ -n "$new_branch" ]; then
-				branch_name="$(get_first_match ${cmd_args[0]})"
+				branch_name="$(git rev-parse --abbrev-ref HEAD)"
+				echo "git push --set-upstream origin "$branch_name" $cmd_args"
 				git push --set-upstream origin "$branch_name" $cmd_args
 			else
 				git push $cmd_args
@@ -49,6 +54,7 @@ version_control() {
 			git add $cmd_args
 		;;
 		diff)
+			# @Cleanup <Yavor>: This should really be configurable.
 			git diff $cmd_args
 		;;
 		update-merge)
@@ -65,20 +71,34 @@ version_control() {
 				git stash pop
 			fi
 		;;
+		checkout-history)
+			max_git_history=10
+			current_history_entry=1
+			last_history_branch=""
+			while [ $current_history_entry -le $max_git_history ]; do
+				current_history_branch="$(git rev-parse --abbrev-ref @{-$current_history_entry})"
+				# if [ "$current_history_branch" != "$last_history_branch" ]; then
+				# fi
+				echo "$current_history_branch"
+				current_history_entry=$((current_history_entry + 1));
+			done
+		;;
 		*)
 			echo "ERROR: '$cmd' is not implemented!"
 		;;
 	esac
 }
-va() { version_control add "$@"; }
-vc() { version_control commit "$@"; }
-vw() { version_control switch "$@"; }
+va()  { version_control add "$@"; }
+vc()  { version_control commit "$@"; }
+vw()  { version_control switch "$@"; }
 vwp() { version_control switch-previous "$@"; }
-vu() { version_control update "$@"; }
+vu()  { version_control update "$@"; }
 vum() { version_control update-merge "$@"; }
-vp() { version_control push "$@"; }
-vs() { version_control status "$@"; }
-vl() { version_control log "$@"; }
-vd() { version_control diff "$@"; }
+vp()  { version_control push "$@"; }
+vs()  { version_control status "$@"; }
+vl()  { version_control log "$@"; }
+vml() { version_control my_log "$@"; }
+vd()  { version_control diff "$@"; }
+vwh() { version_control checkout-history "$@"; }
 alias u='vu'
 alias p='vp'
