@@ -25,7 +25,8 @@ version_control() {
 			git checkout "$(get_first_match "${cmd_args[0]}")"
 		;;
 		switch-previous)
-			git checkout @{-1}
+			ref=${cmd_args[0]:-1}
+			git checkout @{-$ref}
 		;;
 		status)
 			git status
@@ -72,16 +73,25 @@ version_control() {
 			fi
 		;;
 		checkout-history)
+			# @Todo <Yavor>: Make it so we can checkout a branch using the history index
 			max_git_history=10
 			current_history_entry=1
 			last_history_branch=""
+			history_list=""
 			while [ $current_history_entry -le $max_git_history ]; do
 				current_history_branch="$(git rev-parse --abbrev-ref @{-$current_history_entry})"
+				# @Note <Yavor>: This is the case where the commit doesn't point to a branch.
+				# We'll assume it must point to a tag then, which may not be correct (for example,
+				# if you've been recently bisecting).
+				if [ -z "$current_history_branch" ]; then
+					current_history_branch="$(git describe --tags @{-$current_history_entry})"
+				fi
 				# if [ "$current_history_branch" != "$last_history_branch" ]; then
 				# fi
-				echo "$current_history_branch"
+				history_list="$history_list\n$current_history_entry\t$current_history_branch\n"
 				current_history_entry=$((current_history_entry + 1));
 			done
+			echo "$(echo -e "$history_list" | column -t -s "$(printf '\t')")"
 		;;
 		*)
 			echo "ERROR: '$cmd' is not implemented!"

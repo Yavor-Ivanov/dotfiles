@@ -44,7 +44,7 @@ NeoBundle 'mattn/vdbi-vim'
 NeoBundle 'vim-scripts/quickrun.vim'
 NeoBundle 'osyo-manga/unite-quickfix'
 NeoBundle 'sotte/presenting.vim'
-NeoBundle 'Valloric/YouCompleteMe'
+" NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'rdnetto/YCM-Generator'
 NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'tpope/vim-abolish' " More powerful word substitution.
@@ -56,8 +56,19 @@ NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-easytags'
 NeoBundle 'mkusher/padawan.vim'
 NeoBundle 'mhinz/vim-grepper'
+NeoBundle 'prabirshrestha/async.vim'
+NeoBundle 'prabirshrestha/vim-lsp'
+" NeoBundle 'prabirshrestha/asyncomplete.vim'
+
+" NeoBundle 'terryma/vim-smooth-scroll'
 
 NeoBundle 'kshenoy/vim-signature'
+
+" NeoBundle 'ajh17/VimCompletesMe'
+NeoBundle 'lifepillar/vim-mucomplete'
+let g:mucomplete#enable_auto_at_startup = 1
+set completeopt+=noselect,noinsert
+set shortmess+=c
 
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
@@ -85,7 +96,8 @@ TPlugin ctrlp-py-matcher
 " TPlugin vim-scripts/Comceal.git
 TPlugin rainbow
 TPlugin vim-bbye
-TPlugin vdebug
+" TPlugin vdebug  " Disabled this due to python3 error
+
 " TPlugin gundo.vim
 " TPlugin tern_for_vim
 " TPlugin vim-operator-highlight
@@ -292,6 +304,7 @@ augroup END
 
 
 "  Set user preferences. ###################################
+set complete-=i " Stop vim autocompletion from scanning all included files.
 let mapleader = "\<Space>"
 set regexpengine=1
 set exrc	" Allow per-project configs,
@@ -408,13 +421,16 @@ noremap <C-J> <C-W>j
 noremap <C-K> <C-W>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+nmap <leader>E :tabprev<CR>
+nmap <leader>R :tabnext<CR>
+nmap <leader>T :tabnew<CR>
 nmap e :bprev!<CR>
 nmap r :bnext!<CR>
 nmap s :Cnext<CR>
 nmap S :Cprev<CR>
 map <leader>x :call CloseWindow()<CR>
 map <leader>X :bd!<CR>
-map <leader>E :e ~/Development/www/
+" map <leader>E :e ~/Development/www/
 map <leader>e :e<SPACE>
 nmap <leader>w :%s/\s\+$//
 nmap <leader>v :vsp<SPACE>
@@ -437,6 +453,11 @@ map F <Plug>(easymotion-bd-w)
 :command! -range=% -nargs=0 Tab2Space execute '<line1>,<line2>s#^\t\+#\=repeat(" ", len(submatch(0))*' . &ts . ')'
 :command! -range=% -nargs=0 Space2Tab execute '<line1>,<line2>s#^\( \{'.&ts.'\}\)\+#\=repeat("\t", len(submatch(0))/' . &ts . ')'
 
+" noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 2, 2)<CR>
+" noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 2, 2)<CR>
+" noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 1, 4)<CR>
+" noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 1, 4)<CR>
+
 " Enable omni completion.
 let g:ycm_register_as_syntastic_checker = 0
 let g:ycm_enable_diagnostic_signs = 0
@@ -447,7 +468,9 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
-autocmd FileType php setlocal omnifunc=padawan#Complete
+autocmd FileType php setlocal omnifunc=lsp#complete
+autocmd FileType sh setlocal omnifunc=lsp#complete
+" autocmd FileType php setlocal omnifunc=padawan#Complete
 
 :autocmd BufReadPost quickfix nnoremap <buffer> o <CR>
 augroup filetypedetect
@@ -506,5 +529,36 @@ let g:dasht_filetype_docsets['php'] = ['php', 'Symfony', 'Doctrine_ORM']
 let g:dasht_filetype_docsets['cpp'] = ['^c$', 'boost', 'OpenGL']
 
 if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --mmap -g ""'
 endif
+
+function! TestFormatter()
+    let word_under_cursor = expand("<cword>")
+    let current_line = getline(".")
+    print "word_under_cursor"
+endfunction
+command! TestFormatter call TestFormatter()
+
+au User lsp_setup call lsp#register_server({
+    \ 'name': 'bash-language-server',
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'bash-language-server start']},
+    \ 'whitelist': ['sh'],
+    \ })
+
+au User lsp_setup call lsp#register_server({
+    \ 'name': 'php-language-server',
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'bash-language-server start']},
+    \ 'whitelist': ['sh'],
+    \ })
+
+autocmd FileType * call LanguageClientMaps()
+
+function! LanguageClientMaps()
+    if (&filetype ==# 'php')
+        nnoremap <buffer> <silent> gd :LspDefinition<CR>
+        nnoremap <buffer> <silent> gr :LspReference<CR>
+        nnoremap <buffer> <silent> K :LspHover<CR>
+        nnoremap <buffer> <silent> gS :LspWorkspaceSymbol<CR>
+        nnoremap <buffer> <silent> gR :LspRename<CR>
+    endif
+endfunction
