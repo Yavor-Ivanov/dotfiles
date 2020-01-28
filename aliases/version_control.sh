@@ -15,7 +15,7 @@ version_control() {
 	cmd=${script_args[0]}
 	cmd_args=("${script_args[@]:1:$arg_len}")
 
-	# echo "$cmd called with $cmd_args"
+	# echo "$cmd called with ${cmd_args[@]}"
 
 	case $cmd in
 		update)
@@ -32,31 +32,31 @@ version_control() {
 			git status
 		;;
 		log)
-			git log $cmd_args
+			git log "${cmd_args[@]}"
 		;;
 		my_log)
 			my_email="$(git config user.email)"
-			git log --branches --author="$my_email" $cmd_args
+			git log --branches --author="$my_email" "${cmd_args[@]}"
 		;;
 		push)
-			new_branch="$(git push $cmd_args --dry-run 2>&1 | g 'fatal')"
+			new_branch="$(git push "${cmd_args[@]}" --dry-run 2>&1 | g 'fatal')"
 			if [ -n "$new_branch" ]; then
 				branch_name="$(git rev-parse --abbrev-ref HEAD)"
-				echo "git push --set-upstream origin "$branch_name" $cmd_args"
-				git push --set-upstream origin "$branch_name" $cmd_args
+				echo "git push --set-upstream origin "$branch_name" ${cmd_args[@]}"
+				git push --set-upstream origin "$branch_name" "${cmd_args[@]}"
 			else
-				git push $cmd_args
+				git push "${cmd_args[@]}"
 			fi
 		;;
 		commit)
-			git commit $cmd_args
+			git commit "${cmd_args[@]}"
 		;;
 		add)
-			git add $cmd_args
+			git add "${cmd_args[@]}"
 		;;
 		diff)
 			# @Cleanup <Yavor>: This should really be configurable.
-			git diff $cmd_args
+			git diff "${cmd_args[@]}"
 		;;
 		update-merge)
 			has_uncommited_files="$(git status -s)"
