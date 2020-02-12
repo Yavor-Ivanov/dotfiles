@@ -1,0 +1,97 @@
+#!/bin/bash
+
+dump_file="$1"
+executable="$2"
+me="$(basename $0)"
+
+usage() {
+	echo "USAGE: $me [dump_file] [executable]"
+	echo "  dump_file  - Path to a dump file to parse. If not passed, will read the first"
+	echo "               file in the current working directory that ends in '.stackdump'"
+	echo "  executable - Path to executable to resolve addresses from. If not passed,"
+	echo "               will attempt to use eithr an executable that either matches"
+	echo "               dump_file in name, or matches the 'program' mentioned in the"
+	echo "               dump_file contents"
+}
+
+if [ "$dump_file" == "" ]; then
+	dump_file="$(ls | grep ".*\.stackdump" | head -n 1)"
+fi
+
+if [ "$dump_file" == "" ]; then
+	>&2 echo "ERROR: Could not find a stackdump file in current directory."
+	echo ""
+	usage
+	exit
+fi
+
+# @Note <Yavor>: Cygwin produces stackdumps with windows line endings.
+# @Cleanup <Yavor>: Don't everwrite the stackdump file! Users may want to run this program under Cygwin,
+# but still be able to open up the stackdump in notepad (or send it to other windows users).
+if [ $(which dos2unix) ]; then
+	dos2unix -q "$dump_file"
+fi
+
+if [ -z "$executable" ]; then
+	# @Note <Yavor>: Attempt to find the executable that matches the name of the stackdump first.
+	# This is done to cover the case where you compile a program, rename it, and then it generates a
+	# stack dump. When that happens, the program path inside the stack dump would list the new program
+	# name. If you then use the stackdump file to debug the original program you compiled, the names
+	# would not match up.
+	#
+	# However, if you copied the stackdump to where your original executable is, and rename it to match
+	# the executable, this tool should be smart enough to match them.
+	executable="$(echo $dump_file | sed 's/\.stackdump//')"
+
+	# @Note <Yavor>: The second check is done because the stack dump file could have been renamed to something
+	# funky like "test.exe.dump" or "test.dump" instead of "test.exe.stackdump".
+	if [ ! -f "$executable" ] || [ "$executable" == "$dump_file" ]; then
+		full_executable_path="$(cat "$dump_file" | grep 'program=' | sed 's/,.*$//g' | sed 's/program=//')"
+		# @Todo <Yavor>: This should try to use the full executable path first, and attempt to look for an
+		# executable with a matching base name in the current directory only if the full path doesn't lead
+		# anywhere.
+		executable="$(basename "$full_executable_path")"
+	fi
+fi
+
+if [ ! -f "$executable" ]; then
+	>&2 echo "ERROR: Could not find executable $executable!"
+	echo ""
+	usage
+	exit
+fi
+
+if [ -z "$(file "$executable" | grep "executable")" ]; then
+	>&2 echo "ERROR: Found file $executable, but it appears to not be an executable file!"
+	>&2 echo "File type is $(file "$executable")"
+	exit
+fi
+
+rip_addr="$(cat "$dump_file" | grep "rip=" | sed 's/.*rip=//' | sed 's/\W//g')"
+rip_location="$(addr2line -e "$executable" "$rip_addr")"
+
+echo "Last executed instruction: $rip_location"
+echo ""
+echo "Stack trace:"
+
+stack_idx=0
+continue_parsing=0
+while IFS= read -r line; do
+	if [ -n "$(echo "$line" | grep "Function")" ]; then
+		continue_parsing=1
+		continue
+	fi
+	if [ "$(echo "$line" | grep "End of stack trace")" != "" ]; then
+		break
+	fi
+
+	if [ "$continue_parsing" == 1 ]; then
+		stack_addr="$(echo "$line" | tr -s ' ' | cut -d' ' -f2)"
+		stack_location="$(addr2line -e "$executable" "$stack_addr")"
+		if [ -n "$(echo "$stack_location" | grep "??:")" ]; then
+			stack_location="UNKNOWN"
+		fi
+		echo "[$stack_idx] $stack_location"
+		stack_idx=$(($stack_idx+1))
+	fi
+done < "$dump_file"

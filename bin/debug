@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# @Note <Yavor>: This is a two column layout for GDB. On the left, we have the
+# source code and on the right are the registers, watch window, etc.
+gdb-tmux() {
+    local left_id="$(tmux display-message -p '#{pane_id}')"
+    local left_tty="$(tmux display-message -p -t "$letf_id" '#{pane_tty}')"
+
+    local right_id="$(tmux split-pane -hPF "#D" "tail -f /dev/null")"
+    tmux last-pane
+    local right_tty="$(tmux display-message -p -t "$right_id" '#{pane_tty}')"
+
+	tmux swap-pane -s "$left_id" -t "$right_id"
+	tmux last-pane
+    gdb                                                                             \
+		-ex "dashboard source -output $right_tty"                                   \
+		-ex "dashboard -output $left_tty"                                           \
+		"$@"
+
+	# @Note <Yavor>: This cleans up the pane when we're done with gdb.
+    #
+	# Tmux always doesn't return panes to their original sizes when you close a pane
+	# if there is more than one pane in a window. For example, if you have 1 pane
+	# with an editor open, and you run this command, you would have 3 panes as a result:
+	#
+	#   1. One for the editor              - 1/3 the size of the window
+	#   2. One for the gdb code listing    - 1/4 the size of the window
+	#   3. One for the other gdb dashboard - 1/4 the size of the window
+	#   windows.
+	#
+	# When you close one of the gdb panes, the other gdb pane would remain at
+	# its original size instead of resizing to take the rest of the screen space,
+	# so you end up getting:
+	#
+	#   1. Editor pane           - 3/4 the size of the window
+	#   2. Original pane for gdb - 1/4 size of the window
+	#
+	# Instead, we want tmux to return to the original layout:
+	#   1. Editor pane           - 1/2 the size of the window
+	#   2. Original pane for gdb - 1/2 the size of the window
+    #
+    local left_pane_width="$(tmux display-message -p -t "$left_id" '#{pane_width}')"
+    local right_pane_width="$(tmux display-message -p -t "$right_id" '#{pane_width}')"
+	local total_width=$(($left_pane_width+$right_pane_width))
+    tmux kill-pane -t "$right_id"
+	tmux resize-pane -t "$left_id" -x "$total_width"
+}
+
+gdb-tmux "$@"

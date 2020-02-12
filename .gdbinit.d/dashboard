@@ -1,0 +1,19 @@
+dashboard variables -style compact False
+dashboard variables -style align True
+dashboard source -style height 75
+
+set disassembly-flavor intel
+
+define up
+    dashboard source scroll -30
+end
+
+define down
+    dashboard source scroll 30
+end
+
+define center
+    dashboard source scroll
+end
+
+dashboard -layout source breakpoints variables history !threads !registers !memory
