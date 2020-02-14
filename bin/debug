@@ -22,11 +22,13 @@ gdb-tmux() {
 
 	tmux select-pane -t "$control_window_id"
 	tmux select-pane -T "gdb"
-    gdb                                                   \
-        -ex "dashboard source -output $source_window_tty" \
-        -ex "dashboard -output $control_window_tty"       \
-		-ex "tty $output_pane_tty"                        \
-		-ex "start"                                       \
+    local source_pane_height="$(tmux display-message -p -t "$source_window_id" '#{pane_height}')"
+    gdb                                                           \
+        -ex "dashboard source -output $source_window_tty"         \
+        -ex "dashboard -output $control_window_tty"               \
+		-ex "tty $output_pane_tty"                                \
+		-ex "dash source -style height $((source_pane_height-1))" \
+		-ex "start"                                               \
         "$@"
 
     # @Note <Yavor>: This cleans up the pane when we're done with gdb.
