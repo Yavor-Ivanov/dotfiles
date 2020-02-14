@@ -3,18 +3,30 @@
 # @Note <Yavor>: This is a two column layout for GDB. On the left, we have the
 # source code and on the right are the registers, watch window, etc.
 gdb-tmux() {
-    local left_id="$(tmux display-message -p '#{pane_id}')"
-    local left_tty="$(tmux display-message -p -t "$letf_id" '#{pane_tty}')"
+    local control_window_id="$(tmux display-message -p '#{pane_id}')"
+    local control_window_tty="$(tmux display-message -p -t "$control_window_id" '#{pane_tty}')"
 
-    local right_id="$(tmux split-pane -hPF "#D" "tail -f /dev/null")"
-    tmux last-pane
-    local right_tty="$(tmux display-message -p -t "$right_id" '#{pane_tty}')"
+    local source_window_id="$(tmux split-pane -hPF "#D" "tail -f /dev/null")"
+    local source_window_tty="$(tmux display-message -p -t "$source_window_id" '#{pane_tty}')"
 
-    tmux swap-pane -s "$left_id" -t "$right_id"
-    tmux last-pane
-    gdb                                                                             \
-        -ex "dashboard source -output $right_tty"                                   \
-        -ex "dashboard -output $left_tty"                                           \
+	# @Note <Yavor>: This just puts the source window on the left instead of the right.
+    tmux swap-pane -s "$control_window_id" -t "$source_window_id"
+
+    local output_pane_id="$(tmux split-pane -t "$control_window_id" -vPF "#D" "echo 'Program output:\n---------------\n\n'; tail -f /dev/null")"
+    local output_pane_tty="$(tmux display-message -p -t "$output_pane_id" '#{pane_tty}')"
+    local left_pane_height="$(tmux display-message -p -t "$control_window_id" '#{pane_height}')"
+	tmux resize-pane -t "$output_pane_id" -y "$((40*left_pane_height/100))"
+	tmux select-pane -T "$@"
+
+	tmux select-pane -t "$source_window_id" -T "gdb-source"
+
+	tmux select-pane -t "$control_window_id"
+	tmux select-pane -T "gdb"
+    gdb                                                   \
+        -ex "dashboard source -output $source_window_tty" \
+        -ex "dashboard -output $control_window_tty"       \
+		-ex "tty $output_pane_tty"                        \
+		-ex "start"                                       \
         "$@"
 
     # @Note <Yavor>: This cleans up the pane when we're done with gdb.
@@ -39,11 +51,12 @@ gdb-tmux() {
     #   1. Editor pane           - 1/2 the size of the window
     #   2. Original pane for gdb - 1/2 the size of the window
     #
-    local left_pane_width="$(tmux display-message -p -t "$left_id" '#{pane_width}')"
-    local right_pane_width="$(tmux display-message -p -t "$right_id" '#{pane_width}')"
+    local left_pane_width="$(tmux display-message -p -t "$control_window_id" '#{pane_width}')"
+    local right_pane_width="$(tmux display-message -p -t "$source_window_id" '#{pane_width}')"
     local total_width=$(($left_pane_width+$right_pane_width))
-    tmux kill-pane -t "$right_id"
-    tmux resize-pane -t "$left_id" -x "$total_width"
+    tmux kill-pane -t "$source_window_id"
+    tmux kill-pane -t "$output_pane_id"
+    tmux resize-pane -t "$control_window_id" -x "$total_width"
 }
 
 gdb-tmux "$@"
