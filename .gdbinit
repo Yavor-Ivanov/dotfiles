@@ -670,7 +670,8 @@ class Dashboard(gdb.Command):
     @staticmethod
     def setup_terminal():
         # ANSI: enable alternative screen buffer and hide cursor
-        return '\x1b[?1049h\x1b[?25l'
+        # return '\x1b[?1049h\x1b[?25l'
+        return '\x1b[?1049h\x1b[?25h'
 
     @staticmethod
     def reset_terminal():
