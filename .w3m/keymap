@@ -151,7 +151,6 @@ keymap C-z NULL
 keymap ZZ NULL
 keymap ZQ NULL
 
-
 ########## command ##########
 keymap :: COMMAND
 keymap :H HELP
@@ -165,15 +164,13 @@ keymap :p SELECT_MENU
 keymap :h HISTORY
 
 ########## scrolling ##########
-keymap C-e UP
-keymap C-y DOWN
+keymap C-b PREV_HALF_PAGE
+keymap C-f NEXT_HALF_PAGE
 keymap gg BEGIN
 keymap G END
-keymap C-d NEXT_PAGE
-keymap C-u PREV_PAGE
-keymap zz CENTER_V
 keymap J UP
 keymap K DOWN
+
 ########## cursor ##########
 keymap l MOVE_RIGHT
 keymap h MOVE_LEFT
@@ -184,33 +181,40 @@ keymap LEFT MOVE_LEFT
 keymap DOWN MOVE_DOWN1
 keymap UP MOVE_UP1
 keymap 0 LINE_BEGIN
+keymap ^ LINE_BEGIN
 keymap $ LINE_END
 keymap w NEXT_WORD
 keymap b PREV_WORD
+
 ########## cursor history ##########
-keymap C-i REDO
-keymap C-o UNDO
+keymap C-r REDO
+keymap C-u UNDO
+
 ########## navigation ##########
 keymap f MOVE_LIST_MENU
 keymap F LIST_MENU
 keymap C-n NEXT_LINK
 keymap C-p PREV_LINK
+keymap TAB NEXT_LINK
+keymap M-TAB PREV_LINK
+keymap M-[Z PREV_LINK
 keymap :l PEEK_LINK
 
 # reload
 keymap r RELOAD
-keymap C-r RELOAD
 
 # save/load
 keymap :w SAVE
 keymap :W PRINT
 keymap :o GOTO
 keymap u GOTO
+keymap U TAB_GOTO
 keymap :e LOAD
 
 # jump
 keymap ESC-C-j SUBMIT
 keymap C-] TAB_LINK
+keymap C-T TAB_LINK
 keymap C-j GOTO_LINK
 keymap s SUBMIT
 
@@ -235,18 +239,28 @@ keymap x CLOSE_TAB
 keymap gh GOTO https://www.google.com/en
 keymap gH TAB_GOTO https://www.google.com/en
 keymap C-t NEW_TAB
-keymap r NEXT_TAB
-keymap e PREV_TAB
-keymap > TAB_RIGHT
-keymap < TAB_LEFT
+keymap r NEXT_TAB  # This goes to the tab
+keymap e PREV_TAB  # This goes to the tab
+keymap > TAB_RIGHT # This moves the tab
+keymap < TAB_LEFT  # This moves the tab
 keymap t TAB_GOTO
 keymap T TAB_MENU
 keymap @ READ_SHELL
-keymap V VIEW
+keymap V VIEW      # This is view source
 
 ########## quit ##########
 # keymap ZZ EXIT
 # keymap C-Q EXIT
 # keymap ZQ QUIT
-keymap :q QUIT
+keymap :q EXIT
 keymap q QUIT
+
+# Mark operation
+keymap m MARK
+keymap ] NEXT_MARK
+keymap [ PREV_MARK
+keymap  \"  REG_MARK
+
+# Custom
+keymap SPC-b COMMAND "SET_OPTION display_borders=toggle; RESHAPE"
+keymap SPC-t COMMAND "GOTO file:///$LIB/w3m_test.cgi"
