@@ -74,24 +74,47 @@ version_control() {
 		;;
 		checkout-history)
 			# @Todo <Yavor>: Make it so we can checkout a branch using the history index
-			max_git_history=10
+			branch_index="${cmd_args[@]}"
+			max_git_history=30
 			current_history_entry=1
 			last_history_branch=""
-			history_list=""
+			history_list_str=""
+			history_list=()
 			while [ $current_history_entry -le $max_git_history ]; do
-				current_history_branch="$(git rev-parse --abbrev-ref @{-$current_history_entry})"
+				current_history_branch="$(git rev-parse --abbrev-ref @{-$current_history_entry} 2>/dev/null)"
+
+				# @Note <Yavor>: Sometimes we have failed merges that are recorded in the reflog,
+				# but we can't rev-parse the history entry for them into a name. For those, we
+				# we need to look into the reflog itself.
+				if [ "$current_history_branch" == "@{-$current_history_entry}" ]; then
+					history_entry_sha="$(git reflog show HEAD@{$current_history_entry} | head -n 1 | cut -f1 -d' ')"
+					current_history_branch="$(git describe --all --contains $history_entry_sha)"
+				fi
+
 				# @Note <Yavor>: This is the case where the commit doesn't point to a branch.
 				# We'll assume it must point to a tag then, which may not be correct (for example,
 				# if you've been recently bisecting).
 				if [ -z "$current_history_branch" ]; then
-					current_history_branch="$(git describe --tags @{-$current_history_entry})"
+					current_history_branch="$(git describe --tags @{-$current_history_entry} 2>/dev/null)"
+				fi
+				# @Note <Yavor>: If it's neither a branch name nor a tag name, we revert to
+				# displaying the commit SHA
+				if [ -z "$current_history_branch" ]; then
+					current_history_branch="$(git rev-parse --short @{-$current_history_entry})"
 				fi
 				# if [ "$current_history_branch" != "$last_history_branch" ]; then
 				# fi
-				history_list="$history_list\n$current_history_entry\t$current_history_branch\n"
+				history_list+=("$current_history_branch")
+				history_list_str="$history_list_str\n$current_history_entry\t$current_history_branch\n"
 				current_history_entry=$((current_history_entry + 1));
 			done
-			echo "$(echo -e "$history_list" | column -t -s "$(printf '\t')")"
+
+			# @Note <Yavor>: Either switch to the branch with that index or show a list of branches
+			if [ "$branch_index" != "" ]; then
+				git checkout "${history_list[$(($branch_index - 1))]}"
+			else
+				echo "$(echo -e "$history_list_str" | column -t -s "$(printf '\t')")"
+			fi
 		;;
 		*)
 			echo "ERROR: '$cmd' is not implemented!"
@@ -112,3 +135,19 @@ vd()  { version_control diff "$@"; }
 vwh() { version_control checkout-history "$@"; }
 alias u='vu'
 alias p='vp'
+
+if [ -f ~/.fzf.bash ];then
+	complete -o bashdefault -o default -F _fzf_path_completion version_control
+	complete -o bashdefault -o default -F _fzf_path_completion va
+	complete -o bashdefault -o default -F _fzf_path_completion vd
+fi
+
+if [ -f ~/.git-completion.bash ]; then
+	. ~/.git-completion.bash
+
+	__git_complete vw _git_checkout
+	__git_complete vum _git_merge
+	__git_complete u _git_merge
+	__git_complete vd _git_diff
+	__git_complete p _git_push
+fi
