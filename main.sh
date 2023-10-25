@@ -63,5 +63,5 @@ function invoke()
 
 recursive include "defaults.sh"
 recursive include "aliases/*"
-invoke "local/*"
+# invoke "local/*"
 popd

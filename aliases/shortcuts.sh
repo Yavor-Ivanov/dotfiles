@@ -4,6 +4,7 @@ alias clip='nc 127.0.0.1 8377 -q0'
 alias e='$EDITOR'
 alias g='grep -E'
 alias f='ranger'
+alias vim='$EDITOR'
 
 alias la='ls -la'
 alias ll='ls -la'

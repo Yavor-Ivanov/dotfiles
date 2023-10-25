@@ -2,7 +2,7 @@
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export VISUAL=vim
+export VISUAL=nvim
 export EDITOR=$VISUAL
 export BROWSER=w3m
 export PAGER='less -s -M +Gg'

@@ -443,6 +443,7 @@ nmap <leader>H :sp %
 map <leader>td <Plug>TaskList
 map <leader>f :NERDTreeTabsOpen<CR>
 nmap <leader>s <ESC>:GrepperAg<SPACE>
+nmap <leader>s <ESC>:GrepperRg<SPACE>
 map <leader>u :GundoToggle<CR>
 " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>" " Neocomplete tab look forward.
 " inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "<TAB>" " Neocomplete tab look backwards.
@@ -562,3 +563,16 @@ function! LanguageClientMaps()
         nnoremap <buffer> <silent> gR :LspRename<CR>
     endif
 endfunction
+set clipboard+=unnamedplus
+let g:clipboard = {
+          \   'name': 'win32yank-wsl',
+          \   'copy': {
+          \      '+': 'win32yank.exe -i --crlf',
+          \      '*': 'win32yank.exe -i --crlf',
+          \    },
+          \   'paste': {
+          \      '+': 'win32yank.exe -o --lf',
+          \      '*': 'win32yank.exe -o --lf',
+          \   },
+          \   'cache_enabled': 0,
+          \ }
