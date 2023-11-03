@@ -1,0 +1,27 @@
+# vim: filetype=muttrc
+unmailboxes *
+
+# in/out mail servers
+set realname = "REAL NAME"
+set imap_pass = "PASSWORD"
+set smtp_url = "smtps://name@domain@mail.provider.test:465"
+set smtp_pass = "PASSWORD"
+set folder = "imaps://name@domain@mail.provider.test:993"
+set spoolfile = "+INBOX"
+
+set from = "name@domain"
+set envelope_from
+set use_from = "yes"
+set record = "+Sent"
+set trash = "+Trash"
+set postponed = "+Drafts"
+set mail_check = 60
+
+# Allow Mutt to open a new IMAP connection automatically.
+unset imap_passive
+
+# Keep the IMAP connection alive by polling intermittently (time in seconds).
+set imap_keepalive = 300
+
+## Hook -- IMPORTANT!
+account-hook $folder "set imap_pass=PASSWORD"

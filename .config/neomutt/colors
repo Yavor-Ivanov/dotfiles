@@ -1,0 +1,106 @@
+# vim: filetype=muttrc
+
+# Header colors:
+# headers               fg            bg
+color header            color61       default ".*"
+color header            color94       default "^(From)"
+color header            color130      default "^(To)"
+color header            color106      default "^(CC|BCC)"
+color header            color190      default "^(Subject)"
+
+mono  bold              bold
+mono  underline         underline
+mono  indicator         reverse
+mono  error             bold
+
+# general               fg            bg
+color normal            default       default
+color indicator         color52       color208                                             # currently selected message. default makes bar clear, disabled arrow to save space.
+color normal            default       default
+color error             red           default
+color tilde             black         default
+color message           cyan          default
+color markers           red           white
+color attachment        color94       default
+color search            brightmagenta default
+color status            brightblack   default
+color hdrdefault        brightgreen   default
+color quoted            green         default
+color quoted1           blue          default
+color quoted2           cyan          default
+color quoted3           yellow        default
+color quoted4           red           default
+color quoted5           brightred     default
+color signature         brightgreen   default
+color bold              black         default
+color underline         black         default
+color normal            default       default
+color tree              color172      default                                              # thread arrow
+
+# sidebar               fg            bg
+color sidebar_ordinary  color242      default
+color sidebar_highlight color52       color208
+color sidebar_indicator black         color242
+color sidebar_divider   brightblack   default
+color sidebar_flagged   blue          default
+color sidebar_new       color106      default
+color sidebar_unread    red           default
+
+# body                  fg            bg
+color body              color172      default "[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+"        # Email addresses
+color body              color75       default "(https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+" # URL
+color body              color61       default '\[[0-9]+\]'                                 # w3m link sources
+color body              color106      default "\`[^\`]*\`"                                 # Green text between ` and `
+color body              brightblue    default "^# \.*"                                     # Headings as bold blue
+color body              brightcyan    default "^## \.*"                                    # Subheadings as bold cyan
+color body              brightgreen   default "^### \.*"                                   # Subsubheadings as bold green
+# color body              color106      default "^(\t| )+(-|\\*) \.*"                        # List items as green
+color body              red           default "(BAD signature)"
+color body              cyan          default "(Good signature)"
+color body              brightblack   default "^gpg: Good signature .*"
+color body              brightyellow  default "^gpg: "
+color body              brightyellow  red     "^gpg: BAD signature from.*"
+mono  body              bold          "^gpg: Good signature"
+mono  body              bold          "^gpg: BAD signature from.*"
+color body              color75      default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
+
+# body git diffs
+color body              color75      default ^(diff).*
+color body              green        default ^[\+].*
+color body              red          default ^[\-].*
+color body              color61      default "^\-\-\- .*"
+color body              color172     default "^[\+]{3} .*"
+color body              color94      default "^@@ .*"
+color body              color130     default "^index [a-f0-9].*"
+color body              white        brightblack "^---$"                                         # diff start
+
+# color body              brightcyan    default "[;:][-o][)/(|]"                             # emoticons
+# color body              brightcyan    default "[;:][)(|]"                                  # emoticons
+# color body              brightcyan    default "[ ][*][^*]*[*][ ]?"                         # more emoticon?
+# color body              brightcyan    default "[ ]?[*][^*]*[*][ ]"                         # more emoticon?
+
+# Default index colors:
+# index                 fg            bg
+color index             color61       default  '.*'
+color index_number      brightblack   default
+color index_author      color94       default  '.*'
+color index_subject     color106      default  '.*'
+
+# For new mail:
+color index             color75       default  '~N'
+color index_author      color172      default  "~N"
+color index_subject     color190      default  "~N"
+mono  index             bold          ~N
+
+# For tagged mail:
+color index             color75       color235 '~T'
+color index_author      color172      color235 "~T"
+color index_subject     color190      color235 "~T"
+mono  index             bold          ~T
+
+# For deleted mail:
+color index             brightblack   default  "~D"
+color index_author      brightblack   default  "~D"
+color index_subject     brightblack   default  "~D"
+
+color progress          black         cyan
