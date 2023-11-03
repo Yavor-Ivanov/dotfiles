@@ -540,22 +540,70 @@ function! TestFormatter()
 endfunction
 command! TestFormatter call TestFormatter()
 
-au User lsp_setup call lsp#register_server({
-    \ 'name': 'bash-language-server',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'bash-language-server start']},
-    \ 'whitelist': ['sh'],
-    \ })
+if executable('phpactor')
+    augroup LspPhpLanguageServer
+        au!
+        au User lsp_setup call lsp#register_server({
+             \ 'name': 'php-language-server',
+             \ 'cmd': {server_info->[expand('~/.local/bin/phpactor'), 'language-server']},
+             \ 'whitelist': ['php'],
+             \ })
+    augroup END
+endif
 
-au User lsp_setup call lsp#register_server({
-    \ 'name': 'php-language-server',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'bash-language-server start']},
-    \ 'whitelist': ['sh'],
-    \ })
+if executable('pyls')
+    augroup LspPythonLanguageServer
+        au!
+        au User lsp_setup call lsp#register_server({
+            \ 'name': 'pyls',
+            \ 'cmd': {server_info->['pyls']},
+            \ 'allowlist': ['python'],
+            \ })
+    augroup END
+endif
+
+if executable('typescript-language-server')
+    augroup LspTypescriptLanguageServer
+        au!
+        au User lsp_setup call lsp#register_server({
+            \ 'name': 'typescript-language-server',
+            \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+            \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+            \ 'allowlist': ['javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'typescript.tsx'],
+            \ })
+
+
+            " \ 'whitelist': ['javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'typescript.tsx'],
+            " \ 'whitelist': ['typescript', 'typescript.tsx', 'typescriptreact'],
+        " au User lsp_setup call lsp#register_server({
+            " \ 'name': 'typescript-language-server',
+        "     \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+        "      \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+            " \ 'initialization_options': {'diagnostics': 'true'},
+            " \ 'allowlist': ['javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'typescript.tsx'],
+            " \ 'blocklist': {c->empty(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'node_modules/')) ? ['typescript', 'javascript', 'typescriptreact', 'javascriptreact'] : []},
+            " \ })
+    augroup END
+endif
+
+if executable('bash-language-server')
+    augroup LspBashLanguageServer
+        au!
+        au User lsp_setup call lsp#register_server({
+            \ 'name': 'bash-language-server',
+            \ 'cmd': {server_info->[&shell, &shellcmdflag, 'bash-language-server start']},
+            \ 'allowlist': ['sh'],
+            \ })
+        autocmd FileType sh let g:lsp_diagnostics_echo_cursor = 1
+        autocmd FileType sh let g:lsp_diagnostics_enabled = 1
+        autocmd FileType sh let g:lsp_signs_enabled = 1
+    augroup END
+endif
 
 autocmd FileType * call LanguageClientMaps()
 
 function! LanguageClientMaps()
-    if (&filetype ==# 'php')
+    if (index(['php', 'python', 'sh', 'typescript'], &filetype) >= 0)
         nnoremap <buffer> <silent> gd :LspDefinition<CR>
         nnoremap <buffer> <silent> gr :LspReference<CR>
         nnoremap <buffer> <silent> K :LspHover<CR>
@@ -563,6 +611,18 @@ function! LanguageClientMaps()
         nnoremap <buffer> <silent> gR :LspRename<CR>
     endif
 endfunction
+
+let s:whereami_bin="/usr/local/bin/whereami"
+function! s:whereami()
+    let s:whereami_command = s:whereami_bin." ".expand("%")." ".line(".")
+    silent let s:info = system(s:whereami_command)
+    let s:width = max([20, winwidth(0) - 30])
+    let s:info = s:info[0:s:width]
+    echon s:info
+endfunction
+
+map <leader>C :call <SID>whereami()<CR>
+
 set clipboard+=unnamedplus
 let g:clipboard = {
           \   'name': 'win32yank-wsl',
@@ -576,3 +636,29 @@ let g:clipboard = {
           \   },
           \   'cache_enabled': 0,
           \ }
+
+function! UmarkAll()
+    try
+        execute "marks abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    catch /E283:/
+        echom "No local or global marks set."
+    endtry
+endfunction
+
+function! Umark()
+    try
+        execute "marks abcdefghijklmnopqrstuvwxyz"
+    catch /E283:/
+        call UmarkAll()
+    endtry
+endfunction
+
+command! Umark call Umark()
+command! UmarkAll call UmarkAll()
+cabbrev umark Umark
+cabbrev umarkall UmarkAll
+
+function! Renumber()
+    let start_number = input('Enter new starting number: ')
+    execute ":'<,'>!awk -v new_start=" . start_number . " -f /usr/local/bin/renumber_lines.awk"
+endfunction

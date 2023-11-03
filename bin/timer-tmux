@@ -1,0 +1,159 @@
+#!/bin/bash
+
+me="$(basename $0)"
+
+# @Todo:
+#  - Move kill timer to this script
+#    - Add kill all option which kills timers and cleans up the tmp file.
+#  - Add option to flash tmux status bar
+#    - The tmux flash should probably use a lock file so we don't get two
+#      timers racing to flash the status bar and then ruining it.
+#  - Move display timers to this script
+
+print_usage() {
+    >&2 echo ""
+    >&2 echo "Usage: $me [-np] time_spec [task]"
+    >&2 echo ""
+    >&2 echo "Where time_spec can be an integer or string like 1h30m10s"
+    >&2 echo ""
+    >&2 echo "Examples:"
+    >&2 echo ""
+    >&2 echo "  - $me 30m - Run for 30 minutes"
+    >&2 echo "  - $me 200 - Run for 200 seconds"
+    >&2 echo "  - $me 50s - Run for 50 seconds"
+    >&2 echo "  - $me 1m50s - Run for 1 minute and 50 seconds"
+    >&2 echo "  - $me 3h10s - Run for 3 hours and 10 seconds"
+    >&2 echo ""
+    >&2 echo "Options:"
+    >&2 echo ""
+    >&2 echo "  -p - Print to fifo pipe"
+    >&2 echo "  -n - Don't change the tmux window name"
+}
+
+# Set default values
+use_pipe=false
+no_rename_tmux_window=false
+
+# Process command-line options
+while getopts ":np" opt; do
+  case $opt in
+    n) no_rename_tmux_window=true ;;
+    p) use_pipe=true ;;
+    \?) >&2 echo "Invalid option: -$OPTARG"; print_usage; exit 1 ;;
+  esac
+done
+
+# Remove the processed options from the positional parameters
+shift $((OPTIND - 1))
+
+time_spec=$1
+shift 1
+task="$@"
+
+if [ "$use_pipe" != "true" ]; then
+	# @Note: This is used so we can rewrite the current line when
+	# printing the countdon to stdout
+	stty -echoctl
+fi
+
+if [ -z $time_spec ]; then
+    print_usage
+    exit
+fi
+
+if [ -n "$TMUX" ] && [ "$no_rename_tmux_window" == "false" ]; then
+    tty_id="$(tmux display-message -p '#{pane_tty}')"
+fi
+
+if [ "$use_pipe" == "true" ]; then
+    # @Check: Hardcoded because $TMPDIR on MacOS returns some strange direction I'm not sure I have rights to.
+    tmp_dir="/tmp"
+    timer_files="$(ls "$tmp_dir/" | grep "timer_*")"
+    last_timer=$(echo "$timer_files" | sort | tail -n1)
+    last_timer_nr=$(echo "$last_timer" | grep -o "\d")
+    this_timer_nr=$((last_timer_nr+1))
+
+    this_timer_file="$tmp_dir/timer_${this_timer_nr}"
+
+	# @Note: Set first line to PID of timer, so we can later kill timers
+	# by providing an index. So, if we have 3 timers running and we want to
+	# kill the second, we can do kill_timer 2 and it will find the PID
+	# from the file.
+	echo "$$" > $this_timer_file
+fi
+
+cleanup() {
+    echo ""
+    if [ "$use_pipe" == "true" ]; then
+        rm -f "$this_timer_file"
+    fi
+    if [ -n "$TMUX" ] && [ "$no_rename_tmux_window" == "false" ]; then
+        window_number="$(tmux list-panes -aF "#{pane_tty}:#{window_index}" | grep "$tty_id" | cut -d':' -f2)"
+        tmux set-option -t "$window_number" automatic-rename
+    fi
+}
+trap cleanup EXIT
+
+input_hours="$(echo "$time_spec" | grep -oE "[0-9]+h" | tr -d 'h')"
+input_minutes="$(echo "$time_spec" | grep -oE "[0-9]+m" | tr -d 'm')"
+input_seconds="$(echo "$time_spec" | grep -oE "[0-9]+s" | tr -d 's')"
+
+calc_seconds=$((input_hours*3600 + input_minutes*60 + input_seconds))
+if [[ $calc_seconds == 0 ]]; then
+    re='^[0-9]+$'
+    if ! [[ $time_spec =~ $re ]] ; then
+        print_usage
+        exit
+    fi
+    calc_seconds="$time_spec"
+fi
+
+output_to_stdout() {
+    display_str="$1"
+    clear_line=""
+
+    # @Cleanup: We print twice because something is wrong with the cone that's supposed to
+    # overwrite the last line.
+    output="It's the final countdown: $display_str"
+    space_count=$((${COLUMNS}-${#output}))
+    printf "\r%s%${space_count}s" "$output" ""
+    printf "\rIt's the final countdown: %s" $display_str
+}
+
+while [ $calc_seconds -gt 0 ]; do
+    norm_hours=$(( calc_seconds/3600 ))
+    norm_minutes=$(( (calc_seconds-norm_hours*3600)/60 ))
+    norm_seconds=$(( calc_seconds-norm_hours*3600-norm_minutes*60 ))
+
+    display_str=""
+    if [[ $norm_seconds -gt 0 ]]; then
+        display_str="${norm_seconds}s"
+    fi
+    if [[ $norm_minutes -gt 0 ]]; then
+        display_str="${norm_minutes}m${display_str}"
+    fi
+    if [[ $norm_hours -gt 0 ]]; then
+        display_str="${norm_hours}m${display_str}"
+    fi
+
+    sleep 1 &
+    clear_line=""
+
+    if [[ $use_pipe != "true" ]]; then
+        output_to_stdout "$display_str"
+    else
+		echo "$display_str" >> $this_timer_file
+    fi
+
+    if [ -n "$TMUX" ] && [ "$no_rename_tmux_window" == "false" ]; then
+        window_number="$(tmux list-panes -aF "#{pane_tty}:#{window_index}" | grep "$tty_id" | cut -d':' -f2)"
+        tmux rename-window -t "$window_number" "timer ($display_str)"
+    fi
+
+    calc_seconds=$(($calc_seconds - 1))
+    wait
+done
+
+cleanup
+
+eval "$task"

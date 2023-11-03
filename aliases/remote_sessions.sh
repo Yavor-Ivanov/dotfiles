@@ -22,4 +22,5 @@ do
 done
 
 create_session_alias "lcl" false
+create_session_alias "alt" false
 create_session_alias "lothal" true "ppm" "lothal"

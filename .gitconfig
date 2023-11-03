@@ -3,9 +3,11 @@
 	email = yavor@devlabs.bg
 [core]
 	excludesfile = ~/.gitignore
+	pager = diff-so-fancy | $PAGER --tabs=4 -RFX -M
 [diff]
 	tool = vimdiff
 	prompt = false
+	context = 50
 [difftool]
 	prompt = false
 [alias]
@@ -21,3 +23,20 @@
 	trustExitCode = true
 [pager]
 	stash = false
+
+
+[color]
+  ; ui = auto
+  ui = true
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[pull]
+	rebase = false
+[interactive]
+	diffFilter = diff-so-fancy --patch
+[color "diff"]
+	commit = 130 bold
+	meta = 69
+	frag = 130
