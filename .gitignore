@@ -2,3 +2,8 @@ local/
 # Don't version plugins; NeoBundle takes care of those.
 .vim/bundle/**
 .weechat/xfer/**
+.tmux/plugins/
+.config/lazygit
+.config/lazydocker
+.config/configstore
+.config/thefuck
