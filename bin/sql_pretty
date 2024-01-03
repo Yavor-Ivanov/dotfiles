@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Install sqlformat with 'pip install sqlparse'
+echo ""
+sed "s/^\"//g" | sed "s/\"$//g" | sqlformat --reindent --keywords upper -
+echo ""

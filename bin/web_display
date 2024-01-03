@@ -1,0 +1,40 @@
+#!/bin/bash
+
+if [ -z "$(which jq)" ]; then
+	>&2 echo "ERROR: jq needs to be installed."
+fi
+
+if [ -z "$(which w3m)" ]; then
+	>&2 echo "ERROR: w3m needs to be installed."
+fi
+
+
+columns=$(tput cols)
+stdin="$(cat)"
+use_jq="false"
+pretty_content="$(jq 2>/dev/null <<< "$stdin")"
+if [ "$?" == "0" ]; then
+	use_jq="true"
+else
+	pretty_content="$(w3m -T 'text/html' -dump -cols $columns <<< "$stdin")"
+fi
+
+terminal_height="$(tput lines)"
+pretty_content_height="$(wc -l <<< "$pretty_content")"
+
+# Set the pager if we don't have one, and make sure it displays colours
+pager=$PAGER
+if [ -n "$pager" ]; then
+	pager="less"
+fi
+pager="$pager -R"
+# No need to open a pager if the content is > 1/3 of the screen
+if [ $(($terminal_height/3)) -gt $pretty_content_height ]; then
+	pager="cat"
+fi
+
+if [ "$use_jq" == "true" ]; then
+	jq --color-output <<< "$stdin" | $pager
+else
+	w3m -T 'text/html' -dump -cols $columns <<< "$stdin" | $pager
+fi
