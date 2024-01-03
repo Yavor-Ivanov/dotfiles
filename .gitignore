@@ -7,3 +7,5 @@ local/
 .config/lazydocker
 .config/configstore
 .config/thefuck
+.w3m/cookie
+.w3m/history
