@@ -58,6 +58,7 @@ NeoBundle 'mkusher/padawan.vim'
 NeoBundle 'mhinz/vim-grepper'
 NeoBundle 'prabirshrestha/async.vim'
 NeoBundle 'prabirshrestha/vim-lsp'
+NeoBundle 'sk1418/QFGrep'
 " NeoBundle 'prabirshrestha/asyncomplete.vim'
 
 " NeoBundle 'terryma/vim-smooth-scroll'
@@ -443,6 +444,7 @@ nmap <leader>H :sp %
 map <leader>td <Plug>TaskList
 map <leader>f :NERDTreeTabsOpen<CR>
 nmap <leader>s <ESC>:GrepperAg<SPACE>
+" nmap <leader>s <ESC>:GrepperAg<SPACE>
 nmap <leader>s <ESC>:GrepperRg<SPACE>
 map <leader>u :GundoToggle<CR>
 " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>" " Neocomplete tab look forward.
@@ -458,6 +460,10 @@ map F <Plug>(easymotion-bd-w)
 " noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 2, 2)<CR>
 " noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 1, 4)<CR>
 " noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 1, 4)<CR>
+
+" initialize g:grepper with defaults
+runtime plugin/grepper.vim
+let g:grepper.rg.grepprg .= ' --smart-case'
 
 " Enable omni completion.
 let g:ycm_register_as_syntastic_checker = 0
